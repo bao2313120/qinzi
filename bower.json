@@ -1,0 +1,30 @@
+{
+  "name": "qinzi",
+  "version": "0.0.0",
+  "authors": [
+    "baochuanyang <391514467@qq.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "fullcalendar": "~2.4.0",
+    "jquery-ui": "*",
+    "bootstrap":"3.3.5",
+    "x-editable": "*",
+    "highlight": "8.8.0",
+    "CodeMirror":"*",
+    "angularjs":"*",
+    "angular-ui-codemirror":"*",
+    "angular-xeditable":"*",
+    "tinymce":"*"
+  },
+  "resolutions": {
+    "moment": ">=2.5.0"
+  }
+}

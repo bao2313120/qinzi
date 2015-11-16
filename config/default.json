@@ -1,0 +1,26 @@
+{
+  "port": 8090,
+  "debug":false,
+  "mysql_qinzi": {
+    "host": "127.0.0.1",
+    "port": 3306,
+    "user": "root",
+    "password": "",
+    "database": "qinzi"
+  },
+  "JOB_ENV": {"PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"},
+  "mailList" : {
+    "monitorMailList": [
+      "bailibin@magictavern.com",
+      "baochuanyang@magictavern.com",
+      "liubing@magicetavern.com"
+    ]
+  },
+  "mailSetting" : {
+    "service" : "QQex",
+    "auth" : {
+      "user" : "service_monitor@magictavern.com",
+      "pass" : "4Ab799cde9400b61"
+    }
+  }
+}

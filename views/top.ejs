@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/images/favicon.ico">
+    <title>Qinzi System</title>
+    <link rel='stylesheet' href='/components/bootstrap/dist/css/bootstrap.min.css'/>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel='stylesheet' href='/stylesheets/compass.css'/>
+    <link rel='stylesheet' href='/components/jquery-ui/themes/base/jquery-ui.min.css'/>
+    <link rel="stylesheet" href="/components/highlight/src/styles/default.css">
+    <script src="/components/jquery/jquery.min.js"></script>
+    <script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
+    <script src="/components/highlight/src/highlight.js"></script>
+    <script src="/components/angularjs/angular.min.js"></script>
+
+</head>
+<body ng-app="compass">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">
+                <span class="glyphicon glyphicon-magnet"></span> Qinzi System
+            </a>
+            <!--向左对齐-->
+            <ul class="nav navbar-nav navbar-left">
+                <!--<li class="dropdown">-->
+                    <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
+                        <!--游戏-->
+                        <!--<b class="caret"></b>-->
+                    <!--</a>-->
+                    <!--<ul class="dropdown-menu">-->
+                        <!--<li><a href="#">JollyJam</a></li>-->
+                        <!--<li><a href="#">果冻框框消(Tencent)</a></li>-->
+                        <!--<li><a href="#">NCSI Game</a></li>-->
+                        <!--<li class="divider"></li>-->
+                        <!--<li><a href="#">其他游戏</a></li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+            </ul>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        个人中心 <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">注销登陆</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">切换用户</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/admin/system/systemSetting">系统配置</a></li>
+                <li><a href="#">帮助中心</a></li>
+            </ul>
+            <form class="navbar-form navbar-right">
+                <input type="text" class="form-control" placeholder="🔍搜索...">
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    var app = angular.module('compass', []);
+</script>
