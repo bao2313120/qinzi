@@ -16,8 +16,10 @@
     "mysql" : "*",
     "config" : "*",
     "async": "1.2.1",
+    "eventproxy" : "*",
     "require-dir" : "0.3.0",
     "log4js": "0.6.26",
-    "nodemailer": "1.3.4"
+    "nodemailer": "1.3.4",
+    "moment":"*"
   }
 }
