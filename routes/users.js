@@ -12,12 +12,14 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource!!!');
 });
 
-router.get('/register',function(req,res){
+router.post('/register',function(req,res){
     console.log("11223344")
-    var id = req.query('id');
-    var user = {"id":id,"phonenum":id};
+    var id = req.body.id;
+    var password = req.body.password;
+    var user = {"id":id,"phonenum":id,"password":password};
     var code=Util.SUCCESS;
     User.query(id,function(err,dbres){
+        Util.errWarn(err);
         if(dbres!=null&&dbres.length!=0){
             code=3;
         }
@@ -25,15 +27,16 @@ router.get('/register',function(req,res){
             return res.send({"code":code,"failure":"账号已存在"});
         }else{
             User.insert(user,function(err,dbres){
+                Util.errWarn(err);
                 return res.send({"code":code,"failure":""})
             })
         }
     });
 });
 
-router.get('/login',function(req,res){
-    var id = req.query("id");
-    var password = req.query("password");
+router.post('/login',function(req,res){
+    var id = req.body.id;
+    var password = req.body.password;
     var code = Util.SUCCESS;
     User.query(id,function(err,dbres){
         if(dbres==null||dbres.length==0){

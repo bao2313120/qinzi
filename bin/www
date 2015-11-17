@@ -7,12 +7,15 @@
 var app = require('../app');
 var debug = require('debug')('qinzi:server');
 var http = require('http');
-
+var config = require('config');
 /**
  * Get port from environment and store in Express.
  */
+port = config.port;
+if(process.argv[2]){
+    port = process.argv[2];
+}
 
-var port = process.argv[2];
 app.set('port', port);
 
 /**
