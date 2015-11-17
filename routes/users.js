@@ -9,10 +9,11 @@ module.exports = router;
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  res.send('respond with a resource!!!');
 });
 
 router.get('/register',function(req,res){
+    console.log("11223344")
     var id = req.query('id');
     var user = {"id":id,"phonenum":id};
     var code=Util.SUCCESS;
