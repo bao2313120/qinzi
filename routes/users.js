@@ -4,6 +4,9 @@ var db = require('../db');
 var User = require('../model/User');
 var Util = require('../util');
 
+
+module.exports = router;
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -45,8 +48,5 @@ router.get('/login',function(req,res){
             return res.json({"code":code,"failure":""});
         }
     })
-
 });
 
-
-module.exports = router;
