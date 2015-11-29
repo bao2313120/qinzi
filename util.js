@@ -15,9 +15,22 @@ String.prototype.endsWith = function(suffix) {
 function Util() {
 
 }
+Util.COMMEND_YES=1;
+Util.COMMEND_NO=2;
 
 Util.SUCCESS=1;
 Util.FAIL=2;
+
+Util.LIKE_YES=1;
+Util.LIKE_NO=2;
+
+Util.CATEGORY_ONE=1;//四类
+Util.CATEGORY_TWO=2;//下面的
+
+
+Util.ERR_ARGS=6;
+Util.ERR_ARGS_FAILURE="参数错误"
+
 Util.currentDate = function() {
     return moment().format("YYYY-MM-DD");
 }

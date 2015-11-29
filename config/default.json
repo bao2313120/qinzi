@@ -2,7 +2,7 @@
   "port": 8090,
   "debug":false,
   "mysql_qinzi": {
-    "host": "127.0.0.1",
+    "host": "bcyyu.wang",
     "port": 3306,
     "user": "qinzi",
     "password": "qinzi",

@@ -4,7 +4,6 @@ var db = require('../db');
 var User = require('../model/User');
 var Util = require('../util');
 
-
 module.exports = router;
 
 /* GET users listing. */
@@ -13,22 +12,25 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/register',function(req,res){
-    console.log("11223344")
     var id = req.body.id;
     var password = req.body.password;
     var user = {"id":id,"phonenum":id,"password":password};
     var code=Util.SUCCESS;
+    var body={};
     User.query(id,function(err,dbres){
         Util.errWarn(err);
         if(dbres!=null&&dbres.length!=0){
-            code=3;
+            body.code=3;
+            body.failure="账号已存在"
         }
         if(code!=Util.SUCCESS){
-            return res.send({"code":code,"failure":"账号已存在"});
+            return res.send(body);
         }else{
             User.insert(user,function(err,dbres){
                 Util.errWarn(err);
-                return res.send({"code":code,"failure":""})
+                body.code=code;
+                body.failure="";
+                return res.send(body);
             })
         }
     });
@@ -37,19 +39,27 @@ router.post('/register',function(req,res){
 router.post('/login',function(req,res){
     var id = req.body.id;
     var password = req.body.password;
-    var code = Util.SUCCESS;
+    var body={"data":[],"code":Util.SUCCESS,"failure":""};
     User.query(id,function(err,dbres){
         if(dbres==null||dbres.length==0){
-            code=4;
-            return res.json({"code":code,"failure":"用户不存在"});
+            body.code=4;
+            body.failure="用户不存在";
+            return res.json(body);
         }
         var user=dbres[0];
         var userpassword=user.password;
         if(userpassword!=password){
-            code = 5;
-            return res.json({"code":code,"failure":"密码错误"});
+            body.code = 5;
+            body.failure="密码错误";
+            return res.json(body);
         }else{
-            return res.json({"code":code,"failure":""});
+            var resUser={};
+            resUser.name=user.name;
+            resUser.petname=user.petname;
+            var res1={};
+            res1.user=resUser;
+            body.data.push(res1);
+            return res.json(body);
         }
     })
 });
