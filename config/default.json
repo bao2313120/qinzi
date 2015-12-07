@@ -7,5 +7,6 @@
     "user": "qinzi",
     "password": "qinzi",
     "database": "qinzi"
-  }
+  },
+  "pagesize":"50"
 }

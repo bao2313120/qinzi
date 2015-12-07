@@ -29,7 +29,19 @@ Util.CATEGORY_TWO=2;//下面的
 
 
 Util.ERR_ARGS=6;
-Util.ERR_ARGS_FAILURE="参数错误"
+Util.ERR_ARGS_FAILURE="参数错误";
+
+Util.ERR_LOGIN_NO=7;
+Util.ERR_LOGIN_NO_FAILURE="重新登录";
+
+
+
+
+Util.DEL_YES=2;
+Util.DEL_NO=1;
+
+Util.SUPPORT_TYPE_GOODS=1;
+Util.SUPPORT_TYPE_ACTION=2;
 
 Util.currentDate = function() {
     return moment().format("YYYY-MM-DD");

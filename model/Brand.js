@@ -7,8 +7,8 @@ function Brand() {
 module.exports = Brand;
 
 Brand.insert = function(brand,callback){
-    var sql = "insert into brand (name,describe,picid) values (?,?,?)";
-    db.query(sql,[brand.name,brand.describe,brand.picid],callback);
+    var sql = "insert into brand (name,describe,picURL) values (?,?,?)";
+    db.query(sql,[brand.name,brand.describe,brand.picURL],callback);
 }
 
 Brand.getAll = function(callback){

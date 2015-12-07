@@ -14,7 +14,8 @@ router.get('/', function(req, res, next) {
 router.post('/register',function(req,res){
     var id = req.body.id;
     var password = req.body.password;
-    var user = {"id":id,"phonenum":id,"password":password};
+    var petname = req.body.petname;
+    var user = {"id":id,"phonenum":id,"password":password,"petname":petname};
     var code=Util.SUCCESS;
     var body={};
     User.query(id,function(err,dbres){
