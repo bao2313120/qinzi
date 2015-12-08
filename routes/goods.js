@@ -76,7 +76,7 @@ router.get('/goodsindex',function(req,res){
     });
 });
 
-router.get('./brands',function(req,res){
+router.get('/brands',function(req,res){
     var body=new ResBody();
     Brand.getAll(function(err,dbres){
         for(var i in dbres){
