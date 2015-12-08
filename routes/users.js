@@ -83,12 +83,13 @@ router.get('/getmycollect',function(req,res){
 
 router.get('/getuserinfo',function(req,res){
     var id=req.query.id;
+    var body = new ResBody();
     if(id==null||id==""){
         body.code=Util.ERR_LOGIN_NO;
         body.failure=Util.ERR_LOGIN_NO_FAILURE;
         return res.json(body);
     }
-    var body = new ResBody();
+
     User.query(id,function(err,dbres){
         body.data=dbres;
         return res.json(body);
