@@ -15,3 +15,4 @@ User.query = function(id,callback){
     db.query(sql,[id],callback);
 }
 
+

@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var db = require('../db');
 var User = require('../model/User');
+var ResBody = require('../model/ResBody');
+var Like = require('../model/Like');
 var Util = require('../util');
 
 module.exports = router;
@@ -64,4 +66,32 @@ router.post('/login',function(req,res){
         }
     })
 });
+//我的收藏夹
+router.get('/getmycollect',function(req,res){
+    var body = new ResBody();
+    var id=req.query.id;
+    if(id==null||id==""){
+        body.code=Util.ERR_LOGIN_NO;
+        body.failure=Util.ERR_LOGIN_NO_FAILURE;
+        return res.json(body);
+    }
+    Like.getAllGoodsLikeByIdAndIsLike(id,Util.LIKE_YES,function(err,dbres){
+        body.data=dbres;
+        return res.json(body);
+    })
+})
+
+router.get('/getuserinfo',function(req,res){
+    var id=req.query.id;
+    if(id==null||id==""){
+        body.code=Util.ERR_LOGIN_NO;
+        body.failure=Util.ERR_LOGIN_NO_FAILURE;
+        return res.json(body);
+    }
+    var body = new ResBody();
+    User.query(id,function(err,dbres){
+        body.data=dbres;
+        return res.json(body);
+    })
+})
 

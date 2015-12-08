@@ -24,3 +24,4 @@ Like.getAllGoodsLikeById = function(id,callback){
     var sql = "select * from like where type=? and id=?";
     db.query(sql,[Util.SUPPORT_TYPE_GOODS,id],callback);
 }
+

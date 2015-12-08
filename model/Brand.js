@@ -15,3 +15,8 @@ Brand.getAll = function(callback){
     var sql= "select * from brand";
     db.query(sql,callback);
 }
+
+Brand.getBrandById = function(brandid,callback){
+    var sql="select * from brand where brandid=?";
+    db.query(sql,brandid,callback);
+}

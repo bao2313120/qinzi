@@ -85,7 +85,7 @@ router.get('./brands',function(req,res){
         res.json(body);
     })
 });
-
+//需要修改，品牌数据不全
 router.get('/getGoodsByBrand',function(req,res){
     var body = new ResBody();
     var brandId=req.query.brandid;
@@ -96,11 +96,14 @@ router.get('/getGoodsByBrand',function(req,res){
         body.failure=Util.ERR_ARGS_FAILURE;
         return res.json(body);
     }
-    Goods.getMoreGoodsByBrand(offset,pagsize,brandId,function(err,dbres){
-        for(var i in dbres){
-            body.data.push(dbres[i]);
-        }
-        return res.json(body);
+    var data={};
+    Brand.getBrandById(brandId,function(err,title){
+        data.title=title;
+        Goods.getMoreGoodsByBrand(offset,pagsize,brandId,function(err,dbres){
+            data.brandlist=dbres;
+            body.data.push(data);
+            return res.json(body);
+        })
     })
 });
 
