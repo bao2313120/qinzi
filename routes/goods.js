@@ -19,12 +19,20 @@ router.get('/', function(req, res, next) {
 router.get('/getrecomment',function(req,res){
     var body=new ResBody();
     var id=req.query.id;
-    var offset=parseInt(req.query.offset);
-    var pagesize = parseInt(req.query.pagesize);
+
+    var offset=req.query.offset;
+    var pagesize = req.query.pagesize;
+    if(offset==null||offset==""||pagesize==null||pagesize==""){
+        body.code=Util.ERR_ARGS;
+        body.failure=Util.ERR_ARGS_FAILURE;
+        return res.json(body);
+    }
+    offset=parseInt(offset);
+    pagesize=parseInt(pagesize);
     Goods.getMoreGoods(offset,pagesize,function(err,dbres){
         if(err){
             console.error(err);
-            body.failure=Util.FAIL;
+            body.code=Util.FAIL;
             return res.json(body);
         }
         MemberAction.getMainPage(function(err,dbMainPages){
@@ -89,8 +97,16 @@ router.get('/brands',function(req,res){
 router.get('/getGoodsByBrand',function(req,res){
     var body = new ResBody();
     var brandId=req.query.brandid;
-    var offset=parseInt(req.query.offset);
-    var pagsize=parseInt(req.query.pagesize);
+    var offset=req.query.offset;
+    var pagsize=req.query.pagesize;
+    if(offset==null||offset==""||pagesize==null||pagesize==""){
+        body.code=Util.ERR_ARGS;
+        body.failure=Util.ERR_ARGS_FAILURE;
+        return res.json(body);
+    }
+    offset=parseInt(offset);
+    pagesize=parseInt(pagesize);
+
     if(brandId==null||brandId==""){
         body.code=Util.ERR_ARGS;
         body.failure=Util.ERR_ARGS_FAILURE;

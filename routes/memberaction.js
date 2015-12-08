@@ -17,9 +17,16 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/getactions',function(req,res){
+    var body=new ResBody();
     var offset = parseInt(req.query.offset);
     var pagesize = parseInt(req.query.pagesize);
-    var body=new ResBody();
+    if(offset==null||offset==""||pagesize==null||pagesize==""){
+        body.code=Util.ERR_ARGS;
+        body.failure=Util.ERR_ARGS_FAILURE;
+        return res.json(body);
+    }
+    offset=parseInt(offset);
+    pagesize=parseInt(pagesize);
     MemberAction.getActions(offset,pagesize,function(err,dbres){
         body.data=dbres;
         res.json(body);
