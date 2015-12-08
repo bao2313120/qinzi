@@ -17,8 +17,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/getactions',function(req,res){
-    var offset = req.query.offset;
-    var pagesize = req.query.pagesize;
+    var offset = parseInt(req.query.offset);
+    var pagesize = parseInt(req.query.pagesize);
     var body=new ResBody();
     MemberAction.getActions(offset,pagesize,function(err,dbres){
         body.data=dbres;
