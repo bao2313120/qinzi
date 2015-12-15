@@ -9,6 +9,7 @@ var GoodsCateGory=require('../model/GoodsCateGory');
 var Brand = require('../model/Brand');
 var MemberAction = require('../model/MemberAction');
 var config = require('../config/default');
+var moment = require('moment');
 module.exports = router;
 
 /* GET users listing. */
@@ -55,23 +56,45 @@ router.get('/getrecomment',function(req,res){
                                 }
                             }
                         }
-                        data.recommentlist=dbres;
+                        var timeRes=setrecommentListTime(dbres);
+                        data.recommentlist=timeRes;
                         body.data.push(data);
                         return res.json(body);
                     }else{
-                        data.recommentlist=dbres;
+                        var timeRes=setrecommentListTime(dbres);
+                        data.recommentlist=timeRes;
                         body.data.push(data);
                         return res.json(body);
                     }
                 })
             }else{
-                data.recommentlist=dbres;
+                var timeRes=setrecommentListTime(dbres);
+                data.recommentlist=timeRes;
                 body.data.push(data);
                 return res.json(body);
             }
         })
     })
 });
+
+function setrecommentListTime(dbres){
+    var timeres={};
+    for(var i in dbres){
+        var goods=dbres[i];
+        var recommenddate=goods.commenddate;
+        var date= new moment(recommenddate).format('MMM.DD');
+        var thistime=timeres[date];
+        if(thistime==null||thistime==""){
+            timeres[date]=thistime=[];
+            thistime.push(goods);
+        }else{
+            thistime.push(goods);
+        }
+    }
+    return timeres;
+}
+
+
 //获取商品页主页
 router.get('/goodsindex',function(req,res){
     var body=new ResBody();
@@ -124,5 +147,3 @@ router.get('/getGoodsByBrand',function(req,res){
         })
     })
 });
-
-

@@ -1,3 +1,3 @@
-var Body=require('./model/ResBody');
-var body=new Body();
-console.info(body);
+/**
+ * Created by baochuanyang1 on 15/12/15.
+ */

@@ -22,7 +22,7 @@
     "angularjs":"*",
     "angular-ui-codemirror":"*",
     "angular-xeditable":"*",
-    "tinymce":"*"
+    "tinymce":"4.3"
   },
   "resolutions": {
     "moment": ">=2.5.0"
