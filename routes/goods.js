@@ -20,7 +20,6 @@ router.get('/', function(req, res, next) {
 router.get('/getrecomment',function(req,res){
     var body=new ResBody();
     var id=req.query.id;
-
     var offset=req.query.offset;
     var pagesize = req.query.pagesize;
     if(offset==null||offset==""||pagesize==null||pagesize==""){
@@ -91,7 +90,14 @@ function setrecommentListTime(dbres){
             thistime.push(goods);
         }
     }
-    return timeres;
+    var returnTimeRes=[];
+    for(var i in timeres){
+        var timeRes={};
+        timeRes.time=i;
+        timeRes.timeList=timeres[i];
+        returnTimeRes.push(timeRes);
+    }
+    return returnTimeRes;
 }
 
 
@@ -123,7 +129,7 @@ router.get('/getGoodsByBrand',function(req,res){
     var body = new ResBody();
     var brandId=req.query.brandid;
     var offset=req.query.offset;
-    var pagsize=req.query.pagesize;
+    var pagesize=req.query.pagesize;
     if(offset==null||offset==""||pagesize==null||pagesize==""){
         body.code=Util.ERR_ARGS;
         body.failure=Util.ERR_ARGS_FAILURE;
@@ -140,7 +146,7 @@ router.get('/getGoodsByBrand',function(req,res){
     var data={};
     Brand.getBrandById(brandId,function(err,title){
         data.title=title;
-        Goods.getMoreGoodsByBrand(offset,pagsize,brandId,function(err,dbres){
+        Goods.getMoreGoodsByBrand(offset,pagesize,brandId,function(err,dbres){
             data.brandlist=dbres;
             body.data.push(data);
             return res.json(body);
