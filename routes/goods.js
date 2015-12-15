@@ -50,6 +50,8 @@ router.get('/getrecomment',function(req,res){
                             for(var j in dbres1){
                                 if(dbres[i].goodsid==dbres1[j].goodsid){
                                     dbres[i].issupport=dbres1[j].islike;
+                                }else{
+                                    dbres[i].issupport =Util.LIKE_NULL;
                                 }
                             }
                         }
