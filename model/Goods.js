@@ -36,7 +36,7 @@ Goods.addUserActSupport = function(id,goodsid,callback){
 }
 
 Goods.getMoreGoodsByBrand = function(offset,pagesize,brandId,callback){
-    var sql="select * from goods where brandid=? limit ?,? ";
+    var sql="select a.*,b.name as brand from goods a,brand b where a.brandid=b.brandid and a.brandid=? limit ?,? ";
     db.query(sql,[brandId,offset,pagesize],callback);
 }
 

@@ -1,6 +1,6 @@
 {
   "port": 8090,
-  "debug":false,
+  "debug":true,
   "mysql_qinzi": {
     "host": "bcyyu.wang",
     "port": 3306,
