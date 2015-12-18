@@ -40,4 +40,10 @@ Goods.getMoreGoodsByBrand = function(offset,pagesize,brandId,callback){
     db.query(sql,[brandId,offset,pagesize],callback);
 }
 
+Goods.getGoodsByCateGoryId  = function(categoryid,offset,pagesize,callback){
+    var sql ="select * from goods where goodscategory=? limit ?,?";
+    db.query(sql,[categoryid,offset,pagesize],callback);
+}
+
+
 

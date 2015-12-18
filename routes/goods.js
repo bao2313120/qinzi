@@ -115,6 +115,28 @@ router.get('/goodsindex',function(req,res){
     });
 });
 
+
+router.get('/getgoodsbycategory',function(req,res){
+    var body=new ResBody();
+    var categoryid=Number(req.query.categoryid);
+    var offset = Number(req.query.offset);
+    var pagesize = Number(req.query.pagesize);
+    var id = req.query.id;
+    var data={};
+    Goods.getGoodsByCateGoryId(categoryid,offset,pagesize,function(err,dbres){
+        Like.setIsLike(id,dbres,function(err,goods){
+            GoodsCateGory.getCateGoryById(categoryid,function(err,category){
+                data.title=category;
+                data.goods=goods;
+                body.data.push(data);
+                return res.json(body);
+            })
+        })
+    })
+})
+
+
+
 router.get('/brands',function(req,res){
     var body=new ResBody();
     Brand.getAll(function(err,dbres){
@@ -127,18 +149,18 @@ router.get('/brands',function(req,res){
 //需要修改，品牌数据不全
 router.get('/getGoodsByBrand',function(req,res){
     var body = new ResBody();
-    var brandId=req.query.brandid;
-    var offset=req.query.offset;
-    var pagesize=req.query.pagesize;
-    if(offset==null||offset==""||pagesize==null||pagesize==""){
+    var brandId=Number(req.query.brandid);
+    var offset=Number(req.query.offset);
+    var pagesize=Number(req.query.pagesize);
+    var id=req.query.id;
+    if(offset===null||offset===""||pagesize===null||pagesize===""){
         body.code=Util.ERR_ARGS;
         body.failure=Util.ERR_ARGS_FAILURE;
         return res.json(body);
     }
     offset=parseInt(offset);
     pagesize=parseInt(pagesize);
-
-    if(brandId==null||brandId==""){
+    if(brandId===null||brandId===""){
         body.code=Util.ERR_ARGS;
         body.failure=Util.ERR_ARGS_FAILURE;
         return res.json(body);
@@ -147,9 +169,11 @@ router.get('/getGoodsByBrand',function(req,res){
     Brand.getBrandById(brandId,function(err,title){
         data.title=title;
         Goods.getMoreGoodsByBrand(offset,pagesize,brandId,function(err,dbres){
-            data.brandlist=dbres;
-            body.data.push(data);
-            return res.json(body);
+            Like.setIsLike(id,dbres,function(err,goods){
+                data.goods=goods;
+                body.data.push(data);
+                return res.json(body);
+            })
         })
     })
 });

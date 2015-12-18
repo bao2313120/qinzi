@@ -25,3 +25,24 @@ Like.getAllGoodsLikeById = function(id,callback){
     db.query(sql,[Util.SUPPORT_TYPE_GOODS,id],callback);
 }
 
+Like.setIsLike = function(id,goodsList,callabck){
+    if(id!=null&&id!=""&&goodsList!=null&&goodsList.length>0){
+        Like.getAllGoodsLikeById(id,function(err,dbres1){
+            if(dbres1!=null&&dbres1.length>0){
+                for(var i in goodsList){
+                    for(var j in dbres1){
+                        if(goodsList[i].goodsid==dbres1[j].goodsid){
+                            goodsList[i].issupport=dbres1[j].islike;
+                        }else{
+                            goodsList[i].issupport =Util.LIKE_NULL;
+                        }
+                    }
+                }
+            }
+            return callabck(null,goodsList);
+        })
+    }else{
+        return callabck(null,goodsList);
+    }
+
+}

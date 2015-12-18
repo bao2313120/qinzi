@@ -18,3 +18,8 @@ GoodsCateGory.insert=function(goodsCateGory,callback){
         goodsCateGory.categorytype],callback);
 }
 
+GoodsCateGory.getCateGoryById = function(cateGoryId,callback){
+    var sql = "select * from goods_category where categoryid=?";
+    db.query(sql,[cateGoryId],callback);
+}
+
