@@ -45,5 +45,13 @@ Goods.getGoodsByCateGoryId  = function(categoryid,offset,pagesize,callback){
     db.query(sql,[categoryid,offset,pagesize],callback);
 }
 
+Goods.getAllGoods = function(callback){
+    var sql = "select goodsid,name from goods";
+    db.query(sql,callback);
+}
 
+Goods.getGoodsByGoodsId = function(goodsid,callback){
+    var sql = "select * from goods where goodsid=?";
+    db.query(sql,goodsid,callback);
+}
 

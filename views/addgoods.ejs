@@ -1,0 +1,68 @@
+<% include top %>
+<div class="container-fluid" ng-controller="qinziController">
+    <div class ="row">
+        <%include left%>
+        <div class="maicontent col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+            <h3>输入需要添加的商品信息</h3>
+                <div class="col-sm-5">
+                    <label> 商品名称： </label>
+                    <input type="text" style="" class="form-control"  ng-model="data.name">
+                </div>
+                <div class="col-sm-5">
+                    <label> 商品在榜：</label>
+                    <select class="form-control" ng-model="data.category">
+                        <option ng-repeat="option in data.categoryoptions" value="{{option.categoryid}}" >{{option.categoryname}}</option>
+                    </select>
+                </div>
+            <div class="col-sm-5">
+                <label> 商品类别：</label>
+                <select class="form-control" ng-model="data.type">
+                    <option ng-repeat="option in data.typeoptions" value="{{option.categoryid}}" >{{option.categoryname}}</option>
+                </select>
+            </div>
+            <div class="col-sm-5">
+                <label> 品牌：</label>
+                <select class="form-control" ng-model="data.brand">
+                    <option ng-repeat="option in data.brandoptions" value="{{option.brandid}}" >{{option.name}}</option>
+                </select>
+            </div>
+                <div class="col-sm-5">
+                    <label> 标语：</label>
+                    <input type="text" class="form-control"  ng-model="data.poster">
+                </div>
+            <div class="col-sm-5">
+                <label> 默认赞数：</label>
+                <input type="text" class="form-control"  ng-model="data.support">
+            </div>
+            <div class="col-sm-5">
+                <label> 是否推荐：</label>
+                <select class="form-control" ng-model="data.iscommend">
+                    <option value="1">是</option>
+                    <option value="2">否</option>
+                </select>
+            </div>
+            <div class="col-sm-5">
+                <label> 推荐日期：</label>
+                <input type="text" id="d1" class="form-control date" ng-model="commenddate"/>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    app.controller('qinziController',function($scope,$http){
+        getinfo();
+        function getinfo(){
+            $http({
+                url:'/back/getAddGoodsInfo',
+                method:'GET'
+            }).success(
+                    function(resObj){
+                        console.log(resObj);
+                        $scope.data=resObj;
+                    }
+            )
+        }
+    })
+</script>
+</html>

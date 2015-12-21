@@ -1,20 +1,46 @@
-<!DOCTYPE html>
-<html>
-    <script type="text/javascript" src="/components/tinymce/tinymce.js"></script>
-    <script type="text/javascript">
-        tinymce.init({
-            selector: "textarea",
-            plugins: [
-                "advlist autolink lists link image charmap print preview anchor",
-                "searchreplace visualblocks code fullscreen",
-                "insertdatetime media table contextmenu paste jbimages"
-            ],
-            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link jbimages",
-            relative_urls:false
-        });
-    </script>
-<h1>TinyMCE Getting Started Guide</h1>
-<form method="post">
-    <textarea name="content" style="width: 100%" id="mytextarea"></textarea>
-</form>
+<% include top %>
+<div class="container-fluid" ng-controller="qinziController">
+    <div class ="row">
+        <%include left%>
+        <div class="maicontent col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1>TinyMCE Getting Started Guide</h1>
+            <div class="container">
+                <form method="post">
+                    <textarea name="content" style="width: 100%" id="mytextarea" ng-model="data"></textarea>
+                    <input type="text" ng-model="data1" >
+                </form>
+                <hr>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+<script type="text/javascript" src="/components/tinymce/tinymce.js"></script>
+<script type="text/javascript">
+    tinymce.init({
+        selector: "textarea",
+        plugins: [
+            "advlist autolink lists link image charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste image"
+        ],
+        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+        image_list: [
+            {title: 'My image 1', value: 'http://www.tinymce.com/my1.gif'},
+            {title: 'My image 2', value: 'http://www.moxiecode.com/my2.gif'}
+        ],
+        relative_urls:false
+    });
+//    function test(){
+//        setTimeout(function(){
+//            var test = tinymce.get('mytextarea').getContent();
+//            alert(test);
+//        },10000)
+//    }
+//    test();
+    app.controller('qinziController',function($scope,$http,$timeout){
+
+    })
+</script>
 </html>
