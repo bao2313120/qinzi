@@ -1,0 +1,53 @@
+<% include top %>
+<div class="container-fluid" ng-controller="qinziController">
+    <div class ="row">
+        <%include left%>
+        <div class="maicontent col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">用户列表</div>
+                    <table class="table">
+                        <tr>
+                            <th data-field="index">序号</th>
+                            <th data-field="name" >用户id</th>
+                            <th data-field="iscommend">用户名字</th>
+                            <th data-field="iscommend">用户电话</th>
+                            <th data-field="iscommend">邮箱</th>
+                            <th data-field="iscommend">地址</th>
+                            <th data-field="iscommend">收货电话</th>
+                            <th data-field="iscommend">收货地址</th>
+                            <th data-field="iscommend">会员等级</th>
+                        </tr>
+                        <tr ng-repeat="data in tabledata">
+                            <td>{{data.index}}</td>
+                            <td>{{data.id}}</td>
+                            <td>{{data.name}}</td>
+                            <td>{{data.phonenum}}</td>
+                            <td>{{data.email}}</td>
+                            <td>{{data.address}}</td>
+                            <td>{{data.recievephone}}</td>
+                            <td>{{data.recieveaddress}}</td>
+                            <td>{{data.viplevel}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+
+    app.controller('qinziController',function($scope,$http){
+        getUsers();
+        function getUsers() {
+            $http({
+                url: "/back/getallusers",
+                method: "GET"
+            }).success(function (resObj) {
+                $scope.tabledata = resObj;
+            })
+        }
+    })
+</script>
+</html>

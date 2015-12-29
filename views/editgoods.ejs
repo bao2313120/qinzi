@@ -1,67 +1,153 @@
 <% include top %>
 <div class="container-fluid" ng-controller="qinziController">
-    <div class ="row">
-        <%include left%>
+    <div class="row">
+        <% include left %>
         <div class="maicontent col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
-            <h3>修改需要添加的商品信息</h3>
-                <div class="col-sm-5">
-                    <label> 商品名称： </label>
-                    <input type="text" style="" class="form-control"  ng-model="data.name">
-                </div>
-                <div class="col-sm-5">
-                    <label> 商品在榜：</label>
-                    <select class="form-control" ng-model="data.categoryid">
-                        <option ng-repeat="option in data.categoryoptions" value="{{option.categoryid}}" >{{option.categoryname}}</option>
-                    </select>
-                </div>
+            <h3>修改需要修改的商品信息</h3>
+            <div class="col-sm-5">
+                <label> 商品名称： </label>
+                <input type="text" style="" class="form-control" ng-model="data.name">
+            </div>
+            <div class="col-sm-5">
+                <label> 商品在榜：</label>
+                <select class="form-control"
+                        ng-options="option.categoryname for option in options.categoryoptions track by option.categoryid"
+                    ng-model="data.goodscategoryoption">
+                </select>
+            </div>
             <div class="col-sm-5">
                 <label> 商品类别：</label>
-                <select class="form-control" ng-model="data.type">
-                    <option ng-repeat="option in data.typeoptions" value="{{option.categoryid}}" >{{option.categoryname}}</option>
+                <select class="form-control" ng-options="option.categoryname for option in options.typeoptions track by option.categoryid"
+                        ng-model="data.typeoption">
                 </select>
             </div>
             <div class="col-sm-5">
                 <label> 品牌：</label>
-                <select class="form-control" ng-model="data.brandid">
-                    <option ng-repeat="option in data.brandoptions" value="{{option.brandid}}" >{{option.name}}</option>
+                <select class="form-control"
+                        ng-options="option.name for option in options.brandoptions track by option.brandid"
+                        ng-model="data.brandoption">
                 </select>
             </div>
-                <div class="col-sm-5">
-                    <label> 标语：</label>
-                    <input type="text" class="form-control"  ng-model="data.poster">
-                </div>
+            <div class="col-sm-5">
+                <label> 标语：</label>
+                <input type="text" class="form-control" ng-model="data.poster">
+            </div>
             <div class="col-sm-5">
                 <label> 默认赞数：</label>
-                <input type="text" class="form-control"  ng-model="data.support">
+                <input type="text" class="form-control" ng-model="data.support">
             </div>
             <div class="col-sm-5">
                 <label> 是否推荐：</label>
-                <select class="form-control" ng-model="data.iscommend">
-                    <option value="1">是</option>
-                    <option value="2">否</option>
+                <select class="form-control"  ng-options="option.name for option in iscommendoptions track by option.id"
+                        ng-model="data.iscommendoption">
                 </select>
             </div>
             <div class="col-sm-5">
                 <label> 推荐日期：</label>
-                <input type="text" id="d1" class="form-control date" ng-model="commenddate"/>
+                <input type="text" id="d1" class="form-control date" ng-model="data.commenddate"/>
+            </div>
+            <div class="col-sm-9">
+                <label>商品页面信息：</label>
+                <textarea name="content" id="mytextarea" ng-model="data.goodspage"></textarea>
+            </div>
+            <input type="hidden" id="goodsid" value="<%= goodsid %>">
+            <div class="col-sm-5 text-center">
+                <button type="button"  class=" btn btn-lg btn-success" ng-click="update()">提交 </button>
             </div>
         </div>
     </div>
 </div>
 </body>
 <script type="text/javascript">
-    app.controller('qinziController',function($scope,$http){
+    $(function(){
+        $('.date').datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+    });
+    tinymce.init({
+        selector: "textarea",
+        plugins: [
+            "advlist autolink lists link image charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste image"
+        ],
+        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+        image_list: [
+            {title: 'My image 1', value: 'http://www.tinymce.com/my1.gif'},
+            {title: 'My image 2', value: 'http://www.moxiecode.com/my2.gif'}
+        ],
+        relative_urls:false
+    });
+    app.controller('qinziController', function ($scope, $http) {
+        var goodsid = $('#goodsid').val();
+        var iscommendoptions=[{id:1,name:"是"},{id:2,name:"否"}]
+        $scope.iscommendoptions=iscommendoptions;
         getinfo();
-        function getinfo(){
+        function getinfo() {
             $http({
-                url:'/back/getAddGoodsInfo',
-                method:'GET'
+                url: '/back/getAddGoodsInfo',
+                method: 'GET'
             }).success(
-                function(resObj){
-                    console.log(resObj);
-                    $scope.data=resObj;
-                }
+                    function (resObj) {
+                        console.log(resObj);
+                        $scope.options = resObj;
+                        getGoodsInfo()
+                    }
             )
+        }
+
+        function getGoodsInfo() {
+            $http({
+                url: '/back/getgoodsinfo',
+                method: 'GET',
+                params: {
+                    'goodsid': goodsid
+                }
+            }).success(
+                    function (resObj) {
+                        console.log(resObj);
+                        $scope.data = resObj;
+                        var goodsdata=$scope.data;
+                        var options=$scope.options;
+                        var categoryoptions=options.categoryoptions;
+                        tinyMCE.activeEditor.setContent($scope.data.goodspage)
+                        for(var i in categoryoptions) {
+                            var category = categoryoptions[i];
+                            if (goodsdata.goodscategory == category.categoryid) {
+                                goodsdata.goodscategoryoption = category;
+                            }
+                        }
+                        goodsdata.brandoption={"brandid":goodsdata.brandid,"name":goodsdata.brand};
+                        var typeoptions=options.typeoptions;
+                        for(var i in typeoptions){
+                            var type= typeoptions[i];
+                            if(goodsdata.type==type.categoryid){
+                                goodsdata.typeoption = type;
+                            }
+                        }
+                        if(goodsdata.iscommend==1){
+                            goodsdata.iscommendoption={id:1,name:"是"}
+                        }else{
+                            goodsdata.iscommendoption={id:2,name:"否"}
+                        }
+                    }
+            )
+        }
+        $scope.update=function(){
+            var data=$scope.data;
+            data.goodscategory=data.goodscategoryoption.categoryid;
+            data.type=data.typeoption.categoryid;
+            data.iscommend=data.iscommendoption.id;
+            data.brandid=data.brandoption.brandid;
+            data.brand=data.brandoption.name;
+            data.goodspage=tinymce.get('mytextarea').getContent();
+            $http({
+                url:"/back/updategoodsinfo",
+                method:"POST",
+                data:data
+            }).success(function(resObj){
+                console.log(resObj);
+            })
         }
     })
 </script>

@@ -134,9 +134,6 @@ router.get('/getgoodsbycategory',function(req,res){
         })
     })
 })
-
-
-
 router.get('/brands',function(req,res){
     var body=new ResBody();
     Brand.getAll(function(err,dbres){
@@ -146,6 +143,7 @@ router.get('/brands',function(req,res){
         res.json(body);
     })
 });
+
 //需要修改，品牌数据不全
 router.get('/getGoodsByBrand',function(req,res){
     var body = new ResBody();

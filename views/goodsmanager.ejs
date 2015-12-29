@@ -4,16 +4,25 @@
         <%include left%>
         <div class="maicontent col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <div>
+                <div>
+                    <button type="button" class=" btn btn-lg btn-primary"><a href="/back/addgoods">新增商品</a></button>
+                </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">商品列表</div>
                     <table class="table">
                         <tr>
                             <th data-field="index">序号</th>
                             <th data-field="name" >商品名称</th>
+                            <th data-field="iscommend">是否推荐</th>
                         </tr>
                         <tr ng-repeat="data in tabledata">
                             <td>{{data.index}}</td>
                             <td><a href="/back/toeditgoods?goodsid={{data.goodsid}}">{{data.name}}</a></td>
+                            <td>
+                                <button ng-click="nocommend(data.goodsid)" ng-if="data.iscommend==1">取消推荐</button>
+                                <button ng-click="commend(data.goodsid)" ng-if="data.iscommend==2">推荐</button>
+                            </td>
+
                         </tr>
                     </table>
                 </div>
@@ -36,6 +45,44 @@
                 $scope.tabledata=resObj;
             })
         }
+        //推荐
+        $scope.commend =function(goodsid){
+            $http({
+                url:"/back/commendonegoods",
+                method:"GET",
+                params: {
+                    'goodsid': goodsid
+                }
+            }).success(function(){
+                var tabledata=$scope.tabledata;
+                for(var i in tabledata){
+                    if(tabledata[i].goodsid==goodsid){
+                        tabledata[i].iscommend=1;
+                    }
+                }
+            })
+        }
+        //取消推荐
+        $scope.nocommend = function(goodsid){
+            $http({
+                url:"/back/discommendonegoods",
+                method:"GET",
+                params: {
+                    'goodsid': goodsid
+                }
+            }).success(function(){
+                var tabledata=$scope.tabledata;
+                for(var i in tabledata){
+                    if(tabledata[i].goodsid==goodsid){
+                        tabledata[i].iscommend=2;
+                    }
+                }
+            })
+        }
+
+
+
+
 
     })
 </script>

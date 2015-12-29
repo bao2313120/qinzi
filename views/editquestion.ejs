@@ -1,0 +1,39 @@
+<% include top %>
+<div class="container-fluid" ng-controller="qinziController">
+    <div class="row">
+        <% include left %>
+        <input type="hidden" id="testid" value="<%= testid %>">
+        <div class="maicontent col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+            <div ng-repeat="question in questions">
+                <h5>{{question.index}}.{{question.question}}</h5>
+                <ul class="list-group">
+                    <li class="list-group-item">A:{{question.A}}</li>
+                    <li class="list-group-item">B:{{question.B}}</li>
+                    <li class="list-group-item">C:{{question.C}}</li>
+                    <li class="list-group-item">D:{{question.D}}</li>
+                    <li class="list-group-item">E:{{question.E}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    app.controller('qinziController', function ($scope, $http) {
+        var testid = $('#testid').val();
+        getAllQuestionByTestId(testid);
+        function getAllQuestionByTestId(testid){
+            $http({
+                url:"/back/getAllQuestionByTestId",
+                method:"GET",
+                params: {
+                    'testid': testid
+                }
+            }).success(function (resObj) {
+                $scope.questions = resObj;
+            })
+        }
+
+    })
+</script>
+</html>

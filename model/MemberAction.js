@@ -12,8 +12,8 @@ MemberAction.getMainPage = function(callback){
 }
 
 MemberAction.getActions = function(offset,pagesize,callback){
-    var sql = "select * from member_action where isdel=? limit ?,?";
-    db.query(sql,[Util.DEL_NO,offset,pagesize],callback);
+    var sql = "select * from member_action where isdel=? order by time DESC";
+    db.query(sql,[Util.DEL_NO],callback);
 }
 
 MemberAction.getActionById = function(actionid,callback){

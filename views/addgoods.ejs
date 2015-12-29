@@ -22,7 +22,7 @@
             </div>
             <div class="col-sm-5">
                 <label> 品牌：</label>
-                <select class="form-control" ng-model="data.brand">
+                <select class="form-control" ng-model="data.brandid">
                     <option ng-repeat="option in data.brandoptions" value="{{option.brandid}}" >{{option.name}}</option>
                 </select>
             </div>
@@ -43,13 +43,39 @@
             </div>
             <div class="col-sm-5">
                 <label> 推荐日期：</label>
-                <input type="text" id="d1" class="form-control date" ng-model="commenddate"/>
+                <input type="text" id="d1" class="form-control date" ng-model="data.commenddate"/>
+            </div>
+            <div class="col-sm-9">
+                <label>商品页面信息：</label>
+                <textarea name="content" id="mytextarea"></textarea>
+            </div>
+            <div class="col-sm-5 text-center">
+                <button type="button"  class=" btn btn-lg btn-success" ng-click="addgoods()">提交 </button>
             </div>
         </div>
     </div>
 </div>
 </body>
 <script type="text/javascript">
+    $(function(){
+        $('.date').datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+    });
+    tinymce.init({
+        selector: "textarea",
+        plugins: [
+            "advlist autolink lists link image charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste image"
+        ],
+        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+        image_list: [
+            {title: 'My image 1', value: 'http://www.tinymce.com/my1.gif'},
+            {title: 'My image 2', value: 'http://www.moxiecode.com/my2.gif'}
+        ],
+        relative_urls:false
+    });
     app.controller('qinziController',function($scope,$http){
         getinfo();
         function getinfo(){
@@ -62,6 +88,17 @@
                         $scope.data=resObj;
                     }
             )
+        }
+        $scope.addgoods=function(){
+            var data=$scope.data;
+                data.goodspage=tinymce.get('mytextarea').getContent();
+            $http({
+                url:"/back/addgoods",
+                method:"POST",
+                data:data
+            }).success(function(resObj){
+                alert("添加成功");
+            })
         }
     })
 </script>

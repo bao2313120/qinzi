@@ -15,4 +15,8 @@ User.query = function(id,callback){
     db.query(sql,[id],callback);
 }
 
+User.queryAll = function(callback){
+    var sql = "select * from user";
+    db.query(sql,callback);
+}
 
