@@ -22,7 +22,7 @@ MemberAction.getActionById = function(actionid,callback){
 }
 
 MemberAction.getActionPicsById = function(actionid,callback){
-    var sql = "select * from action_pic where actionid=? order by actionpicnum DESC ";
+    var sql = "select * from action_pic where actionid=? order by actionpicnum ASC ";
     db.query(sql,actionid,callback);
 }
 
