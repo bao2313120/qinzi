@@ -144,4 +144,42 @@ router.get('/getAllQuestionByTestId',function(req,res){
     })
 })
 
+router.post('/addquestion',function(req,res){
+    var question = req.body;
+    Question.insertQuestion(question,function(err,dbres){
+        res.send(dbres);
+    })
+})
+
+
+router.post('/delquestion',function(req,res){
+    var questionid = req.body.questionid;
+    Question.delQuestion(questionid,function(err,ebres){
+        res.end();
+    })
+})
+
+router.post('/useTestPage',function(req,res){
+    var testid = req.body.testid;
+    Question.useTest(testid,function(err,dbres){
+        Question.disUseOtherTest(testid,function(err1,dbres1){
+            Question.getAllTest(function(err,dbres){
+                res.send(dbres);
+            })
+        })
+    })
+})
+
+router.get('/gettestpage',function(req,res){
+    res.render('questionpage');
+})
+
+router.get('/getTestPageData',function(req,res){
+    Question.getInUseQuestion(function(err,dbres){
+        res.send(dbres);
+    })
+})
+
+
+
 module.exports = router;

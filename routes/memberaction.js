@@ -34,15 +34,18 @@ router.get('/getactions',function(req,res){
 router.get('/getactionpics',function(req,res){
     var offset = req.query.offset;
     var pagesize = req.query.pagesize;
+    var id = req.query.id;
     var actionid = req.query.actionid;
     var body=new ResBody();
     var data={}
     MemberAction.getActionById(actionid,function(err,titleRes){
         data.title=titleRes;
         MemberAction.getActionPicsById(actionid,function(err,dbRes){
-            data.actionpics=dbRes;
-            body.data.push(data);
-            res.json(body);
+            Like.setIsActionPicLike(id,actionid,dbRes,function(err,dbres1){
+                data.actionpics=dbres1;
+                body.data.push(data);
+                res.json(body);
+            })
         })
     })
 })

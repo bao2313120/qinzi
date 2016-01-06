@@ -11,11 +11,16 @@
                             <th data-field="index">序号</th>
                             <th data-field="name" >问卷id</th>
                             <th data-field="iscommend">问卷名称</th>
+                            <th data-field="isuse">是否使用</th>
                         </tr>
                         <tr ng-repeat="data in tabledata">
                             <td>{{data.index}}</td>
                             <td>{{data.testid}}</td>
                             <td><a ng-href="/back/toeditquestion?testid={{data.testid}}">{{data.test}}</a></td>
+                            <td>
+                                <label ng-if="data.inuse==1">使用中</label>
+                                <button ng-click="useTestPage(data.testid)" ng-if="data.inuse==2">使用</button>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -33,7 +38,22 @@
                 url: "/back/getalltest",
                 method: "GET"
             }).success(function (resObj) {
+                for(var i in resObj){
+                    resObj[i].index=Number(i)+1;
+                }
                 $scope.tabledata = resObj;
+            })
+        }
+
+        $scope.useTestPage = function(testid){
+            var test={};
+            test.testid=testid;
+            $http({
+                url: "/back/useTestPage",
+                method: "POST",
+                data:test
+            }).success(function (resObj) {
+                $scope.tabledata=resObj;
             })
         }
     })

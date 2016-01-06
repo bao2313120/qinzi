@@ -5,7 +5,12 @@
         <input type="hidden" id="testid" value="<%= testid %>">
         <div class="maicontent col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
             <div ng-repeat="question in questions">
-                <h5>{{question.index}}.{{question.question}}</h5>
+                <div>
+                    <h5>{{question.index}}.{{question.question}}
+                        <button type="button" class="glyphicon glyphicon-minus pull-right" ng-click="delquestion(question.questionid)"></button>
+                    </h5>
+                </div>
+
                 <ul class="list-group">
                     <li class="list-group-item">A:{{question.A}}</li>
                     <li class="list-group-item">B:{{question.B}}</li>
@@ -13,6 +18,36 @@
                     <li class="list-group-item">D:{{question.D}}</li>
                     <li class="list-group-item">E:{{question.E}}</li>
                 </ul>
+            </div>
+            <div>
+                <button type="button" class="glyphicon glyphicon-plus pull-right " data-toggle="modal" data-target="#myModal"></button>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">new question</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Some text in the modal.</p>
+                            Question:<input type="text" class="form-control" ng-model="q.question">
+                            A:<input type="text" class="form-control" ng-model="q.A">
+                            B:<input type="text" class="form-control" ng-model="q.B">
+                            C:<input type="text" class="form-control" ng-model="q.C">
+                            D:<input type="text" class="form-control" ng-model="q.D">
+                            E:<input type="text" class="form-control" ng-model="q.E">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" ng-click="addquestion()" data-dismiss="modal" >Add</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
@@ -33,7 +68,46 @@
                 $scope.questions = resObj;
             })
         }
+        $scope.addquestion = function(){
+            addQuestion($scope.q);
+        }
 
+        function addQuestion(question){
+            question.testid=testid;
+            $http({
+                url:"/back/addquestion",
+                method:"POST",
+                data:question
+            }).success(function(dbres){
+                var questions=$scope.questions
+                var num = questions.length;
+                question.index=Number(num)+1;
+                question.questionid=dbres.insertId;
+                $scope.questions.push(question);
+                alert("添加成功");
+            })
+        }
+
+        $scope.delquestion = function(questionid){
+            var question={}
+            question.questionid=questionid;
+            $http({
+                url:"/back/delquestion",
+                method:"POST",
+                data:question
+            }).success(function(){
+                var questions = $scope.questions;
+                for(var i in questions){
+                    if(questions[i].questionid==questionid){
+                        questions.splice(i,1);
+                    }
+                }
+                for( var j in questions){
+                    questions[j].index=Number(j)+1;
+                }
+                alert("删除成功");
+            })
+        }
     })
 </script>
 </html>

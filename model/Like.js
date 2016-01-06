@@ -25,7 +25,12 @@ Like.getAllGoodsLikeById = function(id,callback){
     db.query(sql,[Util.SUPPORT_TYPE_GOODS,id],callback);
 }
 
-Like.setIsLike = function(id,goodsList,callabck){
+Like.getAllActionLikeByIdAndActionId = function(id,actionid,callback){
+    var sql = "select * from userlike where type=? and id=? and actionid=?";
+    db.query(sql,[Util.SUPPORT_TYPE_ACTION,id,actionid],callback);
+}
+
+Like.setIsLike = function(id,goodsList,callback){
     if(id!=null&&id!=""&&goodsList!=null&&goodsList.length>0){
         Like.getAllGoodsLikeById(id,function(err,dbres1){
             if(dbres1!=null&&dbres1.length>0){
@@ -38,11 +43,40 @@ Like.setIsLike = function(id,goodsList,callabck){
                         }
                     }
                 }
+            }else{
+                for(var i in goodsList){
+                    goodsList[i].issupport=Util.LIKE_NULL;
+                }
             }
-            return callabck(null,goodsList);
+            return callback(null,goodsList);
         })
     }else{
-        return callabck(null,goodsList);
+        return callback(null,goodsList);
     }
+}
 
+
+Like.setIsActionPicLike = function(id,actionid,actionpics,callback){
+    if(id!=null&&id!=""&&actionpics!=null&&actionpics.length>0){
+        Like.getAllActionLikeByIdAndActionId(id,actionid,function(err,dbres1){
+            if(dbres1!=null&&dbres1.length>0){
+                for(var i in actionpics){
+                    for(var j in dbres1){
+                        if(actionpics[i].actionpicid==dbres1[j].actionpicid){
+                            actionpics[i].issupport=dbres1[j].islike;
+                        }else{
+                            actionpics[i].issupport =Util.LIKE_NULL;
+                        }
+                    }
+                }
+            }else{
+                for(var i in actionpics){
+                    actionpics[i].issupport=Util.LIKE_NULL;
+                }
+            }
+            return callback(null,actionpics);
+        })
+    }else{
+        return callback(null,actionpics);
+    }
 }
