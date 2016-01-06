@@ -96,3 +96,19 @@ router.get('/getuserinfo',function(req,res){
     })
 })
 
+router.post('/updateAddressPhoneNum',function(req,res){
+    var address=req.body.address;
+    var phone=req.body.phone;
+    var id = req.body.id;
+    var body = new ResBody();
+    if(id==null||id==""){
+        body.code=Util.ERR_LOGIN_NO;
+        body.failure=Util.ERR_LOGIN_NO_FAILURE;
+        return res.json(body);
+    }
+    User.updateAddressAndPhone(id,address,phone,function(err,dbres){
+        return res.json(body);
+    })
+
+})
+

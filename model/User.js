@@ -20,3 +20,7 @@ User.queryAll = function(callback){
     db.query(sql,callback);
 }
 
+User.updateAddressAndPhone = function(id,address,phone,callback){
+    var sql = "update user set recieveaddress=? , recievephone=? where id=?";
+    db.query(sql,[address,phone,id],callback);
+}
