@@ -15,11 +15,11 @@ router.get('/', function(req, res, next) {
 router.post('/support',function(req,res){
     var body=new ResBody();
     var id=req.body.id;
-    var goodsid=req.body.id;
+    var goodsid=Number(req.body.goodsid);
     var supporttype=req.body.supporttype;
     var isLike=req.body.islike;
-    var actionid=req.body.actionid;
-    var actionpicid=req.body.actionpicid;
+    var actionid=Number(req.body.actionid);
+    var actionpicid=Number(req.body.actionpicid);
     if(id==null||id==""){
         body.code=Util.ERR_LOGIN_NO;
         body.failure=Util.ERR_LOGIN_NO_FAILURE;
