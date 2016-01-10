@@ -24,3 +24,7 @@ User.updateAddressAndPhone = function(id,address,phone,callback){
     var sql = "update user set recieveaddress=? , recievephone=? where id=?";
     db.query(sql,[address,phone,id],callback);
 }
+
+User.getVipList = function(){
+    var sql = "select * from viplevel"
+}

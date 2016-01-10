@@ -209,6 +209,7 @@ router.get('/search',function(req,res){
 router.post('/returngoods',function(req,res){
     var body=new ResBody();
     var id=req.body.id;
+    var phone = req.body.phone;
     var message = req.body.message;
     var time = new moment().format("YYYY-MM-DD");
     if(id==null||id==""){
@@ -220,6 +221,7 @@ router.post('/returngoods',function(req,res){
     returngoods.id=id;
     returngoods.message=message;
     returngoods.time=time;
+    returngoods.phone = phone;
     Goods.insertReturnGoods(returngoods,function(err,dbres){
         return res.json(body);
     })

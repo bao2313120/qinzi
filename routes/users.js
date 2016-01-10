@@ -112,3 +112,7 @@ router.post('/updateAddressPhoneNum',function(req,res){
 
 })
 
+router.get('/getviplist',function(req,res){
+    var id = req.query.id;
+})
+

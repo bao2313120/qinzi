@@ -95,6 +95,6 @@ Goods.search = function(searchWord,callback){
 }
 
 Goods.insertReturnGoods = function(returnGoods,callback){
-    var sql = "insert into returngoods (id,message,time) values(?,?,?,?)";
-    db.query(sql,[returnGoods.id,returnGoods.message,returnGoods.time],callback);
+    var sql = "insert into returngoods (id,message,time,phone) values(?,?,?,?)";
+    db.query(sql,[returnGoods.id,returnGoods.message,returnGoods.time,returnGoods.phone],callback);
 }

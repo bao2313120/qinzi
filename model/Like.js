@@ -38,6 +38,7 @@ Like.setIsLike = function(id,goodsList,callback){
                     for(var j in dbres1){
                         if(goodsList[i].goodsid==dbres1[j].goodsid){
                             goodsList[i].issupport=dbres1[j].islike;
+                            break;
                         }else{
                             goodsList[i].issupport =Util.LIKE_NULL;
                         }
@@ -68,6 +69,7 @@ Like.setIsActionPicLike = function(id,actionid,actionpics,callback){
                     for(var j in dbres1){
                         if(actionpics[i].actionpicid==dbres1[j].actionpicid){
                             actionpics[i].issupport=dbres1[j].islike;
+                            break;
                         }else{
                             actionpics[i].issupport =Util.LIKE_NULL;
                         }
