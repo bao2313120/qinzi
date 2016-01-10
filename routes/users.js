@@ -114,12 +114,12 @@ router.post('/updateAddressPhoneNum',function(req,res){
 })
 
 router.post('/uploadHeadPic',function(req,res){
+    console.info(req);
     var form = new formidable.IncomingForm();
     form.uploadDir = config.updatetmppath;
     var body=new ResBody();
-    var id=req.body.id;
-    console.info(req.body.id);
-    console.info(req.body);
+    var id=req.header('UserId');
+    console.info(id);
     if(id==null||id==""){
         body.code=Util.ERR_LOGIN_NO;
         body.failure=Util.ERR_LOGIN_NO_FAILURE;
@@ -127,6 +127,7 @@ router.post('/uploadHeadPic',function(req,res){
     }
     form.parse(req,function(err,fields,files){
         var body=new ResBody();
+        console.info()
         async.eachSeries(files,function(file,cb){
             var fileName = Util.getFileName(file);
             var updateDir = config.updatepath+fileName;

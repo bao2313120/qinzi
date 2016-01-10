@@ -61,8 +61,8 @@ function supportAction(actionid,actionpicid,id,islike,callback){
 router.post('/contribute',function(req,res){
     var form = new formidable.IncomingForm();
     form.uploadDir = config.updatetmppath;
-    var id=req.body.id;
-    var message = req.body.message;
+    var id=req.header('id');
+    var message = req.header('message');
     form.parse(req,function(err,fields,files){
         var body=new ResBody();
         var time = new moment().format("YYYY-MM-DD");
