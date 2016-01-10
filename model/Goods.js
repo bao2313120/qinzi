@@ -88,3 +88,13 @@ Goods.updateCommendNo = function(goodsid,callback){
     var sql="update goods set iscommend=? where goodsid=?";
     db.query(sql,[Util.COMMEND_NO,goodsid],callback);
 }
+
+Goods.search = function(searchWord,callback){
+    var sql = "select * from goods where name like ? or poster like ? ";
+    db.query(sql,[searchWord,searchWord],callback);
+}
+
+Goods.insertReturnGoods = function(returnGoods,callback){
+    var sql = "insert into returngoods (id,message,time) values(?,?,?,?)";
+    db.query(sql,[returnGoods.id,returnGoods.message,returnGoods.time],callback);
+}

@@ -8,5 +8,7 @@
     "password": "qinzi",
     "database": "qinzi"
   },
-  "pagesize":"50"
+  "pagesize":"50",
+  "updatepath":"public/images/update/",
+  "updatetmppath":"public/images/update/temp/"
 }

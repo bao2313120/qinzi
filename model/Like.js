@@ -51,6 +51,10 @@ Like.setIsLike = function(id,goodsList,callback){
             return callback(null,goodsList);
         })
     }else{
+        for(var i in goodsList){
+            var goods = goodsList[i];
+            goods.issupport=Util.LIKE_NULL;
+        }
         return callback(null,goodsList);
     }
 }

@@ -5,6 +5,12 @@ var Util = require('../util');
 var Goods = require('../model/Goods');
 var MemberAction = require('../model/MemberAction');
 var ResBody=require('../model/ResBody');
+var Contribute = require('../model/Contribute');
+var moment = require('moment');
+var formidable = require('formidable');
+var fs = require('fs');
+var async = require('async');
+var config  = require('config');
 module.exports = router;
 
 /* GET users listing. */
@@ -50,4 +56,68 @@ function supportAction(actionid,actionpicid,id,islike,callback){
     }else if(islike==Util.LIKE_NO){
         MemberAction.addUserDisSupport(id,actionid,actionpicid,callback);
     }
+}
+
+router.post('/contribute',function(req,res){
+    var form = new formidable.IncomingForm();
+    form.uploadDir = config.updatetmppath;
+    form.parse(req,function(err,fields,files){
+        var body=new ResBody();
+        var id=fields.id;
+        var message = fields.message;
+        var time = new moment().format("YYYY-MM-DD");
+        if(id==null||id==""){
+            body.code=Util.ERR_LOGIN_NO;
+            body.failure=Util.ERR_LOGIN_NO_FAILURE;
+            return res.json(body);
+        }
+        var contribute ={};
+        contribute.id=id;
+        contribute.time=time;
+        contribute.message=message;
+        Contribute.insert(contribute,function(err,dbres){
+            contribute.contributeid=dbres.insertId;
+            saveImage(files,contribute,body,res);
+        })
+    })
+
+    form.on('end',function(){
+        console.info("over")
+    })
+})
+
+function saveImage(files,contribute,body,res){
+    var size=files.length;
+    async.eachSeries(files,function(file,cb){
+        var fileName = getFileName(file);
+        var updateDir = config.updatepath+fileName;
+        fs.rename(file.path,updateDir,function(err){
+            console.log(err);
+            var contributePic={};
+            contributePic.contributepicname=fileName;
+            contributePic.contributeid=contribute.contributeid;
+            Contribute.insertPic(contributePic,function(err,dbres){
+                cb(null,null);
+            })
+        });
+    },function(err){
+        res.json(body);
+    })
+
+}
+
+function getFileName(file){
+    var fName = Util.getUUid();
+    switch (file.type){
+        case "image/jpeg":
+            fName = fName + ".jpg";
+            break;
+        case "image/png":
+            fName = fName + ".png";
+            break;
+        default :
+            fName =fName + ".png";
+            break;
+    }
+    return fName;
 }

@@ -10,6 +10,7 @@ var Brand = require('../model/Brand');
 var MemberAction = require('../model/MemberAction');
 var config = require('../config/default');
 var moment = require('moment');
+var async = require('async');
 module.exports = router;
 
 /* GET users listing. */
@@ -175,3 +176,53 @@ router.get('/getGoodsByBrand',function(req,res){
         })
     })
 });
+
+router.get('/search',function(req,res){
+    var body = new ResBody();
+    var id = req.query.id;
+    var search = req.query.search;
+    var offset = Number(req.query.offset);
+    var pagesize = Number(req.query.pagesize);
+    var searchresult=[];
+    var data={};
+    var search1="%"+search+"%";
+    Goods.search(search1,function(err,dbres){
+        searchresult=searchresult.concat(dbres);
+        var searchs = Util.splitStrNoRepeat(search)
+        async.eachSeries(searchs,function(searchword,cb){
+            Goods.search(searchword,function(err,results){
+                searchresult=searchresult.concat(results);
+                cb(null,results);
+            })
+        },function(err){
+            searchresult = Util.setNoRepeat(searchresult);
+            Like.setIsLike(id,searchresult,function(err,searchresults){
+                data.searchresult=searchresults;
+                body.data.push(data);
+                res.json(body);
+            })
+
+        })
+    })
+})
+
+router.post('/returngoods',function(req,res){
+    var body=new ResBody();
+    var id=req.body.id;
+    var message = req.body.message;
+    var time = new moment().format("YYYY-MM-DD");
+    if(id==null||id==""){
+        body.code=Util.ERR_LOGIN_NO;
+        body.failure=Util.ERR_LOGIN_NO_FAILURE;
+        return res.json(body);
+    }
+    var returngoods={};
+    returngoods.id=id;
+    returngoods.message=message;
+    returngoods.time=time;
+    Goods.insertReturnGoods(returngoods,function(err,dbres){
+        return res.json(body);
+    })
+})
+
+

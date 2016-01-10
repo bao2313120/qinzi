@@ -7,6 +7,7 @@ var moment = require('moment');
 var settings = require('config');
 var log4js = require('log4js');
 var db = require('./db');
+var uuid = require('uuid');
 
 String.prototype.endsWith = function(suffix) {
     return this.indexOf(suffix, this.length - suffix.length) !== -1;
@@ -138,5 +139,45 @@ Util.clone=function(obj){
     }
 
     return o;
+}
+
+
+Util.splitStrNoRepeat = function(string){
+    var strs = string.split("");
+    var returnstrs = [];
+    for(var i in strs){
+        var str=strs[i];
+        for(var j in returnstrs){
+            if(str==returnstrs[j]){
+                continue;
+            }
+        }
+        str="%"+str+"%";
+        returnstrs.push(str);
+    }
+    return returnstrs;
+}
+
+Util.setNoRepeat = function(goodsList){
+    var goodsArr=[];
+    for(var i in goodsList){
+        var goods = goodsList[i];
+        var isrepeat=false;
+        for(var j in goodsArr){
+            if(goods.goodsid===goodsArr[j].goodsid){
+                isrepeat=true;
+                break;
+            }
+        }
+        if(!isrepeat){
+            goodsArr.push(goods);
+        }
+
+    }
+    return goodsArr;
+}
+
+Util.getUUid = function(){
+    return uuid.v4();
 }
 module.exports = Util;
