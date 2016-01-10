@@ -61,10 +61,10 @@ function supportAction(actionid,actionpicid,id,islike,callback){
 router.post('/contribute',function(req,res){
     var form = new formidable.IncomingForm();
     form.uploadDir = config.updatetmppath;
+    var id=req.body.id;
+    var message = req.body.message;
     form.parse(req,function(err,fields,files){
         var body=new ResBody();
-        var id=fields.id;
-        var message = fields.message;
         var time = new moment().format("YYYY-MM-DD");
         if(id==null||id==""){
             body.code=Util.ERR_LOGIN_NO;
