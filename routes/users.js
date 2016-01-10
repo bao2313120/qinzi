@@ -116,6 +116,7 @@ router.post('/updateAddressPhoneNum',function(req,res){
 router.post('/uploadHeadPic',function(req,res){
     var form = new formidable.IncomingForm();
     form.uploadDir = config.updatetmppath;
+    var body=new ResBody();
     var id=req.body.id;
     if(id==null||id==""){
         body.code=Util.ERR_LOGIN_NO;
