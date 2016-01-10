@@ -54,3 +54,8 @@ User.getVipList = function(callback){
     var sql = "select * from viplevel";
     db.query(sql,callback);
 }
+
+User.getVipLevelPage = function(viplevelid,callback){
+    var sql = "select * from viplevelpage where viplevelid=?";
+    db.query(sql,viplevelid,callback);
+}

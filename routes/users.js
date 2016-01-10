@@ -228,3 +228,12 @@ router.get('/getviplist',function(req,res){
     })
 })
 
+router.get('/getVipPage',function(req,res){
+    var id = req.query.id;
+    var viplevelid = Number(req.query.viplevelid);
+    User.getVipLevelPage(viplevelid,function(err,dbres){
+        var body1=dbres[0].viplevelpage;
+        res.render('page',{body1:body1});
+    })
+})
+

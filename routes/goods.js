@@ -227,4 +227,12 @@ router.post('/returngoods',function(req,res){
     })
 })
 
+router.get('/getGoodsPage',function(req,res){
+    var id = req.query.id;
+    var goodsid = Number(req.query.goodsid);
+    Goods.getGoodsPageById(goodsid,function(err,dbres){
+        var body1=dbres[0].goodspage;
+        res.render('page',{body1:body1});
+    })
 
+})
