@@ -37,6 +37,9 @@ Util.ERR_ARGS_FAILURE="参数错误";
 Util.ERR_LOGIN_NO=7;
 Util.ERR_LOGIN_NO_FAILURE="重新登录";
 
+Util.ERR_OLDPASSWORD=8;
+Util.ERR_OLDPASSWORD_FAILURE = "原密码错误";
+
 
 
 
@@ -179,5 +182,21 @@ Util.setNoRepeat = function(goodsList){
 
 Util.getUUid = function(){
     return uuid.v4();
+}
+
+Util.getFileName = function(file){
+    var fName = Util.getUUid();
+    switch (file.type){
+        case "image/jpeg":
+            fName = fName + ".jpg";
+            break;
+        case "image/png":
+            fName = fName + ".png";
+            break;
+        default :
+            fName =fName + ".png";
+            break;
+    }
+    return fName;
 }
 module.exports = Util;

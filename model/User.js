@@ -25,6 +25,32 @@ User.updateAddressAndPhone = function(id,address,phone,callback){
     db.query(sql,[address,phone,id],callback);
 }
 
-User.getVipList = function(){
-    var sql = "select * from viplevel"
+User.updateHeadPic = function(id,headpic,callback){
+    var sql = "update user set headpic=? where id=?";
+    db.query(sql,[headpic,id],callback);
+}
+
+User.updatePetName = function(id,petname,callback){
+    var sql = "update user set petname=? where id=?";
+    db.query(sql,[petname,id],callback);
+}
+
+User.updateEmail = function(id,email,callback){
+    var sql = "update user set email=? where id=?";
+    db.query(sql,[email,id],callback);
+}
+
+User.updatePassWord = function(id,oldpass,newpass,callback){
+    var sql="update user set password=? where id=? and password=?";
+    db.query(sql,[newpass,id,oldpass],callback);
+}
+
+User.updatePhone = function(id,phone,callback){
+    var sql = "update user set phonenum=? where id=?";
+    db.query(sql,[phone,id],callback);
+}
+
+User.getVipList = function(callback){
+    var sql = "select * from viplevel";
+    db.query(sql,callback);
 }

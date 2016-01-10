@@ -57,7 +57,7 @@ function supportAction(actionid,actionpicid,id,islike,callback){
         MemberAction.addUserDisSupport(id,actionid,actionpicid,callback);
     }
 }
-
+//
 router.post('/contribute',function(req,res){
     var form = new formidable.IncomingForm();
     form.uploadDir = config.updatetmppath;
@@ -87,9 +87,8 @@ router.post('/contribute',function(req,res){
 })
 
 function saveImage(files,contribute,body,res){
-    var size=files.length;
     async.eachSeries(files,function(file,cb){
-        var fileName = getFileName(file);
+        var fileName = Util.getFileName(file);
         var updateDir = config.updatepath+fileName;
         fs.rename(file.path,updateDir,function(err){
             console.log(err);
@@ -104,20 +103,4 @@ function saveImage(files,contribute,body,res){
         res.json(body);
     })
 
-}
-
-function getFileName(file){
-    var fName = Util.getUUid();
-    switch (file.type){
-        case "image/jpeg":
-            fName = fName + ".jpg";
-            break;
-        case "image/png":
-            fName = fName + ".png";
-            break;
-        default :
-            fName =fName + ".png";
-            break;
-    }
-    return fName;
 }
