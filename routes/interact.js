@@ -76,6 +76,7 @@ router.post('/contribute',function(req,res){
     form.uploadDir = config.updatetmppath;
     var id=req.header('id');
     var message = req.header('message');
+    console.info(req.body);
     form.parse(req,function(err,fields,files){
         var body=new ResBody();
         console.info(files);
