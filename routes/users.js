@@ -132,7 +132,9 @@ router.post('/uploadHeadPic',function(req,res){
     form.uploadDir = config.updatetmppath;
     var body=new ResBody();
     var id=req.header('UserId');
-    console.info("body:"+req.body);
+    fs.writeFile("./aa.png",req.body,function(err){
+        console.info("save");
+    })
     console.info(id);
     if(id==null||id==""){
         body.code=Util.ERR_LOGIN_NO;
