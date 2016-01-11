@@ -128,7 +128,6 @@ router.post('/updateAddressPhoneNum',function(req,res){
 })
 
 router.post('/uploadHeadPic',function(req,res){
-    console.info(req);
     var form = new formidable.IncomingForm();
     form.uploadDir = config.updatetmppath;
     var body=new ResBody();
