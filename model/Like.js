@@ -30,6 +30,12 @@ Like.getAllActionLikeByIdAndActionId = function(id,actionid,callback){
     db.query(sql,[Util.SUPPORT_TYPE_ACTION,id,actionid],callback);
 }
 
+Like.getGoodsLikeByGoodsId = function(id,goodsid,callback){
+    var sql = "select * from userlike where id=? and goodsid=?";
+    db.query(sql,[id,goodsid],callback);
+}
+
+
 Like.setIsLike = function(id,goodsList,callback){
     if(id!=null&&id!=""&&goodsList!=null&&goodsList.length>0){
         Like.getAllGoodsLikeById(id,function(err,dbres1){

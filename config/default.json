@@ -1,6 +1,6 @@
 {
   "port": 8090,
-  "debug":true,
+  "debug":false,
   "mysql_qinzi": {
     "host": "123.57.188.10",
     "port": 3306,

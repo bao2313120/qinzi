@@ -6,6 +6,7 @@ var Goods = require('../model/Goods');
 var MemberAction = require('../model/MemberAction');
 var ResBody=require('../model/ResBody');
 var Contribute = require('../model/Contribute');
+var Like = require('../model/Like');
 var moment = require('moment');
 var formidable = require('formidable');
 var fs = require('fs');
@@ -32,13 +33,25 @@ router.post('/support',function(req,res){
         return res.json(body);
     }
     if(supporttype==Util.SUPPORT_TYPE_GOODS){
-        supportGoods(goodsid,id,isLike,function(err,dbres){
-            return res.json(body);
-        });
-    }else if(supporttype==Util.SUPPORT_TYPE_ACTION){
-        supportAction(actionid,actionpicid,id,isLike,function(err,dbres){
-            return res.json(body);
+        Like.getGoodsLikeByGoodsId(id,goodsid,function(err,dbres){
+            if(dbres!=null&&dbres.length>0){
+                return res.json(body);
+            }
+            supportGoods(goodsid,id,isLike,function(err1,dbres1){
+                return res.json(body);
+            });
         })
+
+    }else if(supporttype==Util.SUPPORT_TYPE_ACTION){
+        Like.getAllActionLikeByIdAndActionId(id,actionid,function(err,dbres){
+            if(dbres!=null&&dbres.length>0){
+                return res.json(body);
+            }
+            supportAction(actionid,actionpicid,id,isLike,function(err1,dbres1){
+                return res.json(body);
+            })
+        })
+
     }
 });
 
@@ -65,6 +78,8 @@ router.post('/contribute',function(req,res){
     var message = req.header('message');
     form.parse(req,function(err,fields,files){
         var body=new ResBody();
+        console.info(files);
+        console.info(files.length);
         var time = new moment().format("YYYY-MM-DD");
         if(id==null||id==""){
             body.code=Util.ERR_LOGIN_NO;
@@ -88,7 +103,9 @@ router.post('/contribute',function(req,res){
 
 function saveImage(files,contribute,body,res){
     async.eachSeries(files,function(file,cb){
+        console.info(file);
         var fileName = Util.getFileName(file);
+        console.info(fileName);
         var updateDir = config.updatepath+fileName;
         fs.rename(file.path,updateDir,function(err){
             console.log(err);

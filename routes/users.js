@@ -4,6 +4,7 @@ var db = require('../db');
 var User = require('../model/User');
 var ResBody = require('../model/ResBody');
 var Like = require('../model/Like');
+var Goods = require('../model/Goods');
 var Util = require('../util');
 var formidable = require('formidable');
 var fs = require('fs');
@@ -79,8 +80,21 @@ router.get('/getmycollect',function(req,res){
         return res.json(body);
     }
     Like.getAllGoodsLikeByIdAndIsLike(id,Util.LIKE_YES,function(err,dbres){
-        body.data=dbres;
-        return res.json(body);
+        var data=[];
+        async.eachSeries(dbres,function(userLike,cb){
+            Goods.getGoodsByGoodsId(userLike.goodsid,function(err,goodsArr){
+                if(goodsArr.length>0){
+                    var goods=goodsArr[0];
+                    goods.support=goods.support+goods.actsupport;
+                    goods.issupport=Util.LIKE_YES;
+                    data.push(goods);
+                }
+                cb(null,null);
+            })
+        },function(err){
+            body.data=data;
+            return res.json(body);
+        })
     })
 })
 
@@ -241,3 +255,6 @@ router.get('/getVipPage',function(req,res){
     })
 })
 
+router.get('/gettestpage',function(req,res){
+
+})
