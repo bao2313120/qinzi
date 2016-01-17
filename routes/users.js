@@ -132,7 +132,7 @@ router.post('/uploadHeadPic',function(req,res){
     form.uploadDir = config.updatetmppath;
     var body=new ResBody();
     var id=req.header('UserId');
-    fs.writeFile("./aa.png",req.body,function(err){
+    fs.writeFile("aa.png",req.body,function(err){
         console.info("save");
     })
     console.info(id);

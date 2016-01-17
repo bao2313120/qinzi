@@ -52,3 +52,21 @@ Question.getInUseQuestion = function(callback){
     var sql = "select a.* from question a join test b on a.testid=b.testid where b.inuse=?";
     db.query(sql,Util.DEL_NO,callback);
 }
+
+Question.insertAnswers = function(id,testid,answers,callback){
+    if(answers==null||answers.length==0){
+        return callback(null,null);
+    }
+    var sql = "insert into testanswer (id,questionid,question,testid,answer) values ";
+    var params=[]
+    for(var i in answers){
+        var answer = answers[i];
+        if(i==answers.length-1){
+            sql+=" (?,?,?,?,?)";
+        }else{
+            sql+=" (?,?,?,?,?), ";
+        }
+        params.push(id,answer.questionid,answer.question,testid,answer.answer);
+    }
+    db.query(sql,params,callback);
+}

@@ -26,6 +26,9 @@ Util.LIKE_YES=1;
 Util.LIKE_NO=2;
 Util.LIKE_NULL=0;//没有支持状态
 
+Util.TEST_YES=2;
+Util.TEST_NO=1;//是否完成问卷
+
 
 Util.CATEGORY_ONE=1;//四类
 Util.CATEGORY_TWO=2;//下面的

@@ -59,3 +59,8 @@ User.getVipLevelPage = function(viplevelid,callback){
     var sql = "select * from viplevelpage where viplevelid=?";
     db.query(sql,viplevelid,callback);
 }
+
+User.updateIsTestQuestion = function(id,isTestState,callback){
+    var sql = "update user set istestquestion=? where id=?";
+    db.query(sql,[isTestState,id],callback);
+}

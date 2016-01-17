@@ -6,6 +6,7 @@ var GoodsCateGory = require('../model/GoodsCateGory');
 var Goods = require('../model/Goods');
 var User = require('../model/User');
 var Question = require('../model/Question');
+var ResBody = require('../model/ResBody');
 var moment = require('moment');
 
 /* GET home page. */
@@ -52,13 +53,15 @@ router.get('/toeditgoods',function(req,res){
 })
 
 router.get('/getgoodsinfo',function(req,res){
-    var goodsid=req.query.goodsid;
+    var goodsid=Number(req.query.goodsid);
     Goods.getGoodsByGoodsId(goodsid,function(err,dbres){
         Goods.getGoodsPageById(goodsid,function(err,dbres1){
+            if(dbres1==null||dbres1.length==0){
+                res.end();
+            }
             dbres[0].goodspage=dbres1[0].goodspage;
             res.send(dbres[0]);
         })
-
     })
 })
 
@@ -172,6 +175,14 @@ router.post('/useTestPage',function(req,res){
 })
 
 router.get('/gettestpage',function(req,res){
+    var id = req.query.id;
+    res.locals.id=id;
+    var body=new ResBody();
+    if(id==null||id==""){
+        body.code=Util.ERR_LOGIN_NO;
+        body.failure=Util.ERR_LOGIN_NO_FAILURE;
+        return res.json(body);
+    }
     res.render('questionpage');
 })
 
@@ -181,6 +192,19 @@ router.get('/getTestPageData',function(req,res){
     })
 })
 
+router.post('/dotestanswer',function(req,res){
+    var testanswer=req.body;
+    var answers=testanswer.answers;
+    var id = Number(testanswer.id);
+    var testid = testanswer.testid;
+    Question.insertAnswers(id,testid,answers,function(err,dbres){
+        User.updateIsTestQuestion(id,Util.TEST_YES,function(err,dbres1){
+            return res.end();
+        })
+
+    })
+
+})
 
 
 module.exports = router;
