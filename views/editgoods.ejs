@@ -72,7 +72,14 @@
             "insertdatetime media table contextmenu paste image moxiemanager"
         ],
         toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-        relative_urls:false
+        relative_urls:false,
+        moxiemanager_image_settings:{
+            /* Scope to different folder, show thumbnails of selected extensions */
+            moxiemanager_title : 'Images',
+            moxiemanager_extensions : 'jpg,png,gif',
+            moxiemanager_rootpath : '/testfiles/testfolder',
+            moxiemanager_view : 'thumbs'
+        }
     });
     app.controller('qinziController', function ($scope, $http) {
         var goodsid = $('#goodsid').val();
