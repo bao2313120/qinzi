@@ -71,11 +71,10 @@
             "searchreplace visualblocks code fullscreen",
             "insertdatetime media table contextmenu paste image"
         ],
-        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image moxiemanager",
-        image_list: [
-            {title: 'My image 1', value: 'http://www.tinymce.com/my1.gif'},
-            {title: 'My image 2', value: 'http://www.moxiecode.com/my2.gif'}
-        ],
+        external_plugins: {
+            "moxiemanager": "/moxiemanager/plugin.min.js"
+        }
+        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
         relative_urls:false
     });
     app.controller('qinziController', function ($scope, $http) {
