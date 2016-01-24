@@ -64,3 +64,10 @@ User.updateIsTestQuestion = function(id,isTestState,callback){
     var sql = "update user set istestquestion=? where id=?";
     db.query(sql,[isTestState,id],callback);
 }
+
+User.insertOrder = function(order,callback){
+    var sql = "insert into order (id,recievename,recievephone,recieveaddress,pushphone," +
+        " viplevel,vipprice) values (?,?,?,?,?,?,?)";
+    db.query(sql,[order.id,order.name,order.phone,order.address,
+        order.pushphone,order.viplevel,order.vipprice],callback);
+}

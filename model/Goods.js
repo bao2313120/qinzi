@@ -16,7 +16,7 @@ Goods.getMoreGoods = function(offset,pageSize,callback){
 
 Goods.insert = function(goods,callback){
     var sql = "insert into goods("+COLUMN+") values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    db.query(sql,[goods.picURL,goods.goodscategory,goods.poster,goods.webaddr,
+    db.query(sql,[goods.picURL,goods.category,goods.poster,goods.webaddr,
         goods.support,goods.actsupport,goods.share,goods.dissupport,goods.date,
         goods.iscommend,goods.brand,goods.commenddate,goods.widepicURL,
         goods.brandid,goods.type,goods.name],callback);

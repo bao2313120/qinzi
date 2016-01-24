@@ -257,6 +257,24 @@ router.get('/getVipPage',function(req,res){
     })
 })
 
-router.get('/gettestpage',function(req,res){
-
+router.post('/doOrder',function(req,res){
+    var order={};
+    var body = new ResBody();
+    order.id = req.body.id;
+    order.name = req.body.name;
+    order.phone = req.body.phone;
+    order.address = req.body.address;
+    order.pushphone = req.body.pushphone;
+    order.viplevel = req.body.viplevel;
+    order.vipprice = req.body.vipprice;
+    User.insertOrder(order,function(err,dbres){
+        if(err){
+            body.code=Util.FAIL;
+            return res.json(body);
+        }
+        var data={};
+        data.order=order;
+        body.data.push(data);
+        res.json(body);
+    })
 })

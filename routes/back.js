@@ -68,7 +68,6 @@ router.get('/getgoodsinfo',function(req,res){
 router.post('/addgoods',function(req,res){
     var goods = req.body;
     goods.commenddate=new moment(goods.commenddate).format('YYYY-MM-DD');
-    goods.commenddate=new moment(goods.commenddate).format('YYYY-MM-DD');
     var brandoptions=goods.brandoptions;
     for(var i in brandoptions){
         if(brandoptions[i].brandid==goods.brandid){

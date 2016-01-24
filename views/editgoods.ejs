@@ -50,6 +50,17 @@
                 <label>商品页面信息：</label>
                 <textarea name="content" id="mytextarea" ng-model="data.goodspage"></textarea>
             </div>
+            <div class="input-append col-sm-5">
+                <label> 宽图：</label>
+                <input type="text" id="widepicurl" class="form-control input-xlarge" ng-model="data.widepicURL"/>
+                <a href="javascript:;" onclick="moxman.browse({view: 'thumbs', fields: 'widepicurl', extensions:'jpg,gif,png'});" class="btn">Pick file</a>
+            </div>
+            <div class="input-append col-sm-5">
+                <label> 方图：</label>
+                <input type="text" id="picurl" class="form-control input-xlarge" ng-model="data.picURL"/>
+                <a href="javascript:;" onclick="moxman.browse({view: 'thumbs', fields: 'picurl', extensions:'jpg,gif,png'});" class="btn">Pick file</a>
+
+            </div>
             <input type="hidden" id="goodsid" value="<%= goodsid %>">
             <div class="col-sm-5 text-center">
                 <button type="button"  class=" btn btn-lg btn-success" ng-click="update()">提交 </button>
