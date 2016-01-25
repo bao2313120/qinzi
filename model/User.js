@@ -66,7 +66,7 @@ User.updateIsTestQuestion = function(id,isTestState,callback){
 }
 
 User.insertOrder = function(order,callback){
-    var sql = "insert into order (id,recievename,recievephone,recieveaddress,pushphone," +
+    var sql = "insert into userorder (id,recievename,recievephone,recieveaddress,pushphone," +
         " viplevel,vipprice) values (?,?,?,?,?,?,?)";
     db.query(sql,[order.id,order.name,order.phone,order.address,
         order.pushphone,order.viplevel,order.vipprice],callback);
