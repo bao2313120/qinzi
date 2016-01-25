@@ -272,9 +272,8 @@ router.post('/doOrder',function(req,res){
             body.code=Util.FAIL;
             return res.json(body);
         }
-        var data={};
-        data.order=order;
-        body.data.push(data);
+
+        body.data.push(order);
         res.json(body);
     })
 })

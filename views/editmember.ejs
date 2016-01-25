@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+</head>
+<body>
+
+<div class="container-fluid" ng-controller="testController">
+    <div class="row">
+        <div ng-repeat="question in questions">
+            <label>{{question.index}}. {{question.question}}</label>
+            <div>
+                <div class="">
+                    <label class="col-sm-12"><input type="radio" name="{{question.questionid}}">A.{{question.A}}</label>
+                    <label class="col-sm-12"><input  type="radio" name="{{question.questionid}}">B.{{question.B}}</label>
+                    <label class="col-sm-12"><input  type="radio" name="{{question.questionid}}">C.{{question.C}}</label>
+                    <label class="col-sm-12"><input  type="radio" name="{{question.questionid}}">D.{{question.D}}</label>
+                    <label class="col-sm-12"><input  type="radio" name="{{question.questionid}}">E.{{question.E}}</label>
+                    <label class="col-sm-12">其他<input type="text"></label>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-5 text-center">
+            <button type="button"  class=" btn btn-lg btn-success" ng-click="submit()">提交 </button>
+        </div>
+    </div>
+</div>
+<label class="radio">
+    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+    Option one is this and that—be sure to include why it's great
+</label>
+<label class="radio">
+    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+    Option two can be something else and selecting it will deselect option one
+</label>
+
+<%- body1 %>
+</body>
+</html>
