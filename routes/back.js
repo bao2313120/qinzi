@@ -246,7 +246,7 @@ router.post('/addactionpic',function(req,res){
         })
     },function(err){
         MemberAction.getActionPicsById(actionid,function(err,dbres1){
-            console.info(err+dbres1);
+            console.info(err+ JSON.stringify(dbres1));
             res.json(dbres1);
         })
     })
