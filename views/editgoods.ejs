@@ -124,7 +124,7 @@
                         var goodsdata=$scope.data;
                         var options=$scope.options;
                         var categoryoptions=options.categoryoptions;
-                        tinyMCE.activeEditor.setContent($scope.data.goodspage)
+                        tinymce.activeEditor.setContent($scope.data.goodspage)
                         for(var i in categoryoptions) {
                             var category = categoryoptions[i];
                             if (goodsdata.goodscategory == category.categoryid) {
