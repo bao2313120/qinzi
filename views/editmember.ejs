@@ -10,7 +10,7 @@
             <input type="hidden" id="actionid" value="<%= actionid %>">
             <div ng-repeat="pic in pics">
                 <div class="col-sm-4">
-                    <img src="{{pic.url}}">
+                    <img src="{{pic.picURL}}">
                     {{pic.actionpicnum}}
                 </div>
             </div>
@@ -53,7 +53,7 @@
                         data:data
                     }).success(function(resObj){
                         $scope.pics=resObj;
-                        console.log(args.files);
+                        console.log(resObj);
                     })
 
 
