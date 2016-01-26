@@ -231,7 +231,8 @@ router.post('/addactionpic',function(req,res){
     var actionid=req.body.actionid;
     async.eachSeries(pics,function(pic,cb){
         MemberAction.getActionPicBypicURL(pic.picURL, function (err,results) {
-            if(results==null&&results.length==0){
+            console.log(err+results);
+            if(results==null||results.length==0){
                 console.log(pic.picURL+"不存在");
                 MemberAction.getMaxpicNumByActionId(actionid,function(err,dbres1){
                     pic.actionpicnum=(dbres1[0].actionpicnum==null?1:dbres1[0].actionpicnum);
