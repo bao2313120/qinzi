@@ -30,8 +30,8 @@
         var actionid = $('#actionid').val();
         console.log(actionid);
         $scope.managerImg =function(){
-            alert("asd");
             var data={}
+            data.actionid=actionid;
             data.pics=[];
             moxman.browse({
                 oninsert: function(args) {
