@@ -219,8 +219,8 @@ router.get('/getallactions',function(req,res){
 })
 
 router.get('/toeditaction',function(req,res){
-    var goodsid = req.query.goodsid;
-    res.locals.actionid=goodsid;
+    var actionid = req.query.actionid;
+    res.locals.actionid=actionid;
     res.render('editmember');
 })
 
