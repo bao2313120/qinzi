@@ -36,12 +36,13 @@
                 oninsert: function(args) {
                     console.log(args);
                     console.log(args.files);
-                    for(var i in args){
+                    var files=args.files;
+                    for(var i in files){
                         var pic={};
                         console.log(i);
-                        console.log(args.files[i]);
+                        console.log(files[i]);
                         pic.actionid=actionid;
-                        pic.picURL=args.files[i].url;
+                        pic.picURL=files[i].url;
                         data.pics.push(pic);
                     }
                     console.log(data);
