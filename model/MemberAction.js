@@ -43,8 +43,8 @@ MemberAction.addUserDisSupport = function(id,actionid,actionpicid,callback){
 
 MemberAction.insertMemberActionPics = function(memberActionPic,callback){
     var sql = "insert into action_pic (actionid,picURL,actionpicnum) vlues (?,?,?)";
-    db.query(sql,[memberActionPic.actionid,memberActionPic.picURL,
-        memberActionPic.actionpicnum],callback);
+    db.query(sql,[Number(memberActionPic.actionid),memberActionPic.picURL,
+        Number(memberActionPic.actionpicnum)],callback);
 }
 
 MemberAction.getMaxpicNumByActionId = function(actionid,callback){
