@@ -28,32 +28,26 @@
 
     app.controller('qinziController', function ($scope, $http) {
         var actionid = $('#actionid').val();
-        console.log(actionid);
         $scope.managerImg =function(){
             var data={}
             data.actionid=actionid;
             data.pics=[];
             moxman.browse({
                 oninsert: function(args) {
-                    console.log(args);
-                    console.log(args.files);
                     var files=args.files;
                     for(var i in files){
                         var pic={};
-                        console.log(i);
-                        console.log(files[i]);
                         pic.actionid=actionid;
                         pic.picURL=files[i].url;
                         data.pics.push(pic);
                     }
-                    console.log(data);
                     $http({
                         url:"/back/addactionpic",
                         method:"post",
                         data:data
                     }).success(function(resObj){
                         $scope.pics=resObj;
-                        console.log(resObj);
+                        console.log("return:"+resObj);
                     })
 
 
