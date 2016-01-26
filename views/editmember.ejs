@@ -29,6 +29,20 @@
 
     app.controller('qinziController', function ($scope, $http) {
         var actionid = $('#actionid').val();
+        getActionPics();
+        function getActionPics(){
+            $http({
+                url:"/back/getactionpics",
+                method:"GET",
+                params: {
+                    'actionid': actionid
+                }
+            }).success(function (resObj) {
+                $scope.pics = resObj;
+            })
+        }
+
+
         $scope.managerImg =function(){
             var data={}
             data.actionid=actionid;
