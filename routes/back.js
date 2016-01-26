@@ -235,6 +235,7 @@ router.post('/addactionpic',function(req,res){
             if(results==null||results.length==0){
                 console.log(pic.picURL+"不存在");
                 MemberAction.getMaxpicNumByActionId(actionid,function(err,dbres1){
+                    console.log(err+dbres1);
                     pic.actionpicnum=(dbres1[0].actionpicnum==null?1:dbres1[0].actionpicnum);
                     console.log(pic);
                     MemberAction.insertMemberActionPics(pic,Util.errWarn)
