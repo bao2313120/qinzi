@@ -35,8 +35,10 @@
             moxman.browse({
                 oninsert: function(args) {
                     console.log(args);
+                    console.log(args.files);
                     for(var i in args){
                         var pic={};
+                        console.log(args.files);
                         pic.actionid=actionid;
                         pic.picURL=args.files[i].url;
                         data.pics.push(pic);
