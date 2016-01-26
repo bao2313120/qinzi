@@ -229,6 +229,7 @@ router.post('/addactionpic',function(req,res){
     var pics = req.body.pics;
     console.info(pics);
     var actionid=req.body.actionid;
+    console.log("action:"+actionid);
     async.eachSeries(pics,function(pic,cb){
         MemberAction.getActionPicBypicURL(pic.picURL, function (err,results) {
             console.log(err+results);
