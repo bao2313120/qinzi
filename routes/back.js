@@ -236,9 +236,11 @@ router.post('/addactionpic',function(req,res){
                 console.log(pic.picURL+"不存在");
                 MemberAction.getMaxpicNumByActionId(actionid,function(err,dbres1){
                     pic.actionpicnum=(dbres1[0].actionpicnum==null?1:dbres1[0].actionpicnum);
-                    MemberAction.insertMemberActionPics(pic,Util.errWarn)
+                    MemberAction.insertMemberActionPics(pic,cb);
                 })
 
+            }else{
+                cb(null,null);
             }
         })
     },function(err){
