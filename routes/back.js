@@ -9,6 +9,7 @@ var Question = require('../model/Question');
 var ResBody = require('../model/ResBody');
 var MemberAction = require('../model/MemberAction');
 var moment = require('moment');
+var async = require('async');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
