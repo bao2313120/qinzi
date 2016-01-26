@@ -34,6 +34,7 @@
             data.pics=[];
             moxman.browse({
                 oninsert: function(args) {
+                    console.log(args);
                     for(var i in args){
                         var pic={};
                         pic.actionid=actionid;
