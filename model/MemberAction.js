@@ -42,7 +42,7 @@ MemberAction.addUserDisSupport = function(id,actionid,actionpicid,callback){
 }
 
 MemberAction.insertMemberActionPics = function(memberActionPic,callback){
-    var sql = "insert into action_pic (actionid,picURL,actionpicnum) vlues (?,?,?)";
+    var sql = "insert into action_pic (actionid,picURL,actionpicnum) values (?,?,?)";
     db.query(sql,[Number(memberActionPic.actionid),memberActionPic.picURL,
         Number(memberActionPic.actionpicnum)],callback);
 }
