@@ -7,6 +7,7 @@ var Goods = require('../model/Goods');
 var User = require('../model/User');
 var Question = require('../model/Question');
 var ResBody = require('../model/ResBody');
+var MemberAction = require('../model/MemberAction');
 var moment = require('moment');
 
 /* GET home page. */
@@ -200,10 +201,47 @@ router.post('/dotestanswer',function(req,res){
         User.updateIsTestQuestion(id,Util.TEST_YES,function(err,dbres1){
             return res.end();
         })
-
     })
-
 })
 
+router.get('/getactions',function(req,res){
+    var id = req.query.id;
+    MemberAction.getActions(null,null,function(err,dbres){
+        for(var i in dbres){
+            dbres[i].index=Number(i)+1;
+        }
+        res.json(dbres);
+    })
+})
 
+router.get('/getallactions',function(req,res){
+    res.render('membermanager');
+})
+
+router.get('/toeditaction',function(req,res){
+    var goodsid = req.query.goodsid;
+    res.locals.actionid=goodsid;
+    res.render('editmember');
+})
+
+router.post('/addactionpic',function(req,res){
+    var pics = req.body.pics;
+    console.info(pics);
+    var actionid=req.body.actionid;
+    async.eachSeries(pics,function(pic,cb){
+        MemberAction.getActionPicBypicURL(pic.picURL, function (err,results) {
+            if(results==null&&results.length==0){
+                MemberAction.getMaxpicNumByActionId(actionid,function(err,dbres1){
+                    pic.actionpicnum=(dbres1[0].actionpicnum==null?1:dbres1[0].actionpicnum);
+                    MemberAction.insertMemberActionPics(pic,Util.errWarn)
+                })
+
+            }
+        })
+    },function(err){
+        MemberAction.getActionPicsById(actionid,function(err,dbres1){
+            res.json(dbres1);
+        })
+    })
+})
 module.exports = router;

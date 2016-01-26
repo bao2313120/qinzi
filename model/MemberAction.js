@@ -16,6 +16,7 @@ MemberAction.getActions = function(offset,pagesize,callback){
     db.query(sql,[Util.DEL_NO],callback);
 }
 
+
 MemberAction.getActionById = function(actionid,callback){
     var sql = "select * from member_action where actionid=?";
     db.query(sql,actionid,callback);
@@ -40,3 +41,17 @@ MemberAction.addUserDisSupport = function(id,actionid,actionpicid,callback){
     })
 }
 
+MemberAction.insertMemberActionPics = function(memberActionPic,callback){
+    var sql = "insert into action_pic (actionid,picURL,actionpicnum) vlues (?,?,?)";
+    db.query(sql,[memberActionPic.actionid,memberActionPic.picURL,
+        memberActionPic.actionpicnum],callback);
+}
+
+MemberAction.getMaxpicNumByActionId = function(actionid,callback){
+    var sql = "select max(actionpicnum)+1 as actionpicnum from action_pic where actionid=?";
+    db.query(sql,actionid,callback);
+}
+MemberAction.getActionPicBypicURL = function(picURL,callback){
+    var sql = "select * from action_pic where picURL=?";
+    db.query(sql,picURL,callback);
+}

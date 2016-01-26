@@ -46,10 +46,6 @@
                 <label> 推荐日期：</label>
                 <input type="text" id="d1" class="form-control date" ng-model="data.commenddate"/>
             </div>
-            <div class="col-sm-9">
-                <label>商品页面信息：</label>
-                <textarea name="content" id="mytextarea" ng-model="data.goodspage"></textarea>
-            </div>
             <div class="input-append col-sm-5">
                 <label> 宽图：</label>
                 <input type="text" id="widepicurl" class="form-control input-xlarge" ng-model="data.widepicURL"/>
@@ -61,6 +57,11 @@
                 <a href="javascript:;" onclick="moxman.browse({view: 'thumbs', fields: 'picurl', extensions:'jpg,gif,png'});" class="btn">Pick file</a>
 
             </div>
+            <div class="col-sm-9">
+                <label>商品页面信息：</label>
+                <textarea name="content" id="mytextarea" ng-model="data.goodspage"></textarea>
+            </div>
+
             <input type="hidden" id="goodsid" value="<%= goodsid %>">
             <div class="col-sm-5 text-center">
                 <button type="button"  class=" btn btn-lg btn-success" ng-click="update()">提交 </button>

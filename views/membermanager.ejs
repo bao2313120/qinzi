@@ -2,27 +2,26 @@
 <div class="container-fluid" ng-controller="qinziController">
     <div class ="row">
         <%include left%>
-        <div class="maicontent col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div class="maincontent col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <div>
                 <div>
-                    <button type="button" class=" btn btn-lg btn-primary"><a href="/back/addgoods">新增商品</a></button>
+                    <button type="button" class=" btn btn-lg btn-primary"><a href="/back/addgoods">新增会员活动</a></button>
                 </div>
                 <div class="panel panel-default">
-                    <div class="panel-heading">商品列表</div>
+                    <div class="panel-heading">会员活动列表</div>
                     <table class="table">
                         <tr>
                             <th data-field="index">序号</th>
-                            <th data-field="name" >商品名称</th>
-                            <th data-field="iscommend">是否推荐</th>
+                            <th data-field="actionname" >活动名称</th>
+                            <th data-field="isdel">是否展示</th>
                         </tr>
                         <tr ng-repeat="data in tabledata">
                             <td>{{data.index}}</td>
-                            <td><a href="/back/toeditgoods?goodsid={{data.goodsid}}">{{data.name}}</a></td>
+                            <td><a href="/back/toeditaction?actionid={{data.actionid}}">{{data.actionname}}</a></td>
                             <td>
-                                <button ng-click="nocommend(data.goodsid)" ng-if="data.iscommend==1">取消推荐</button>
-                                <button ng-click="commend(data.goodsid)" ng-if="data.iscommend==2">推荐</button>
+                                <button ng-click="nocommend(data.actionid)" ng-if="data.isdel==1">取消展示</button>
+                                <button ng-click="commend(data.actionid)" ng-if="data.isdel==2">展示</button>
                             </td>
-
                         </tr>
                     </table>
                 </div>
@@ -32,14 +31,14 @@
 </div>
 </body>
 <script type="text/javascript">
-    function indexFormatter(value, row, index) {
+    function indexFormatter(value,row,index) {
         return index;
     }
     app.controller('qinziController',function($scope,$http){
-    getGoods();
-        function getGoods(){
+        getActions();
+        function getActions(){
             $http({
-                url:"/back/getallgoods",
+                url:"/back/getactions",
                 method:"GET"
             }).success(function(resObj){
                 $scope.tabledata=resObj;
@@ -79,11 +78,6 @@
                 }
             })
         }
-
-
-
-
-
     })
 </script>
 </html>
