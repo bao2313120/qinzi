@@ -10,8 +10,9 @@
             <input type="hidden" id="actionid" value="<%= actionid %>">
             <div ng-repeat="pic in pics">
                 <div class="col-sm-4">
+                    序号{{pic.actionpicnum}}
                     <img src="{{pic.picURL}}">
-                    {{pic.actionpicnum}}
+                    <button type="button" class="glyphicon glyphicon-minus pull-right" ng-click="delImg(pic.actionpicid)"></button>
                 </div>
             </div>
 
@@ -49,10 +50,22 @@
                         $scope.pics=resObj;
                         console.log("return:"+resObj);
                     })
-
-
                 }
             });
+        }
+
+        $scope.delImg = function (actionpicid) {
+            var data={};
+            data.actionpicid=actionpicid;
+            data.actionid = actionid;
+            $http({
+                url:"/back/delactionpic",
+                method:"post",
+                data:data
+            }).success(function(resObj){
+                $scope.pics=resObj;
+                alert("del success");
+            })
         }
 
     })

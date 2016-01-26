@@ -250,4 +250,15 @@ router.post('/addactionpic',function(req,res){
         })
     })
 })
+
+router.post('/delactionpic',function(req,res){
+    var actionpicid = req.body.actionpicid;
+    var actionid=req.body.actionid;
+    MemberAction.delImageByActionPicId(actionpicid,function(err,dbres){
+        MemberAction.getActionPicsById(actionid,function(err,dbres1){
+            console.log("to:"+err+ JSON.stringify(dbres1));
+            res.json(dbres1);
+        })
+    })
+})
 module.exports = router;

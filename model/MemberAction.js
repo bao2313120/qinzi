@@ -55,3 +55,8 @@ MemberAction.getActionPicBypicURL = function(picURL,callback){
     var sql = "select * from action_pic where picURL=?";
     db.query(sql,picURL,callback);
 }
+
+MemberAction.delImageByActionPicId = function(actionpicid,callback){
+    var sql="delete from action_pic where actionpicid=?";
+    db.query(sql,actionpicid,callback);
+}
