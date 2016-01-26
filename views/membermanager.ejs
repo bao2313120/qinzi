@@ -41,6 +41,11 @@
                 url:"/back/getactions",
                 method:"GET"
             }).success(function(resObj){
+                for( var i in resObj){
+                    if(resObj[i].actionid==1){
+                        resObj.splice(0,1);
+                    }
+                }
                 $scope.tabledata=resObj;
             })
         }

@@ -1,8 +1,35 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+table {
+    border-collapse: collapse;
 }
+
+thead, td {
+    padding: 5px 10px;
+    border: 1px solid #999;
+    font-size: 13px;
+    font-family: 'Consolas';
+}
+
+thead {
+    background-color: #bbb;
+    color: white;
+    text-align: center;
+}
+
+tr.awesome {
+    color: red;
+}
+
+a {
+  color: #26a1ff;
+}
+
+input.query {
+    font-size: 18px;
+    width: 75px;
+    height: 25px;
+}
+

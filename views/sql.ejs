@@ -1,0 +1,28 @@
+<% include top %>
+<div class="container-fluid" ng-controller="qinziController">
+    <div class ="row">
+        <%include left%>
+        <div class="maincontent col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <select id="sltSql">
+                <option value="">快捷查询</option>
+                <% for (var i in names) {%>
+                <option value="<%=names[i]%>"><%=names[i]%></option>
+                <% } %>
+            </select>
+            <button id="btSave">保存</button>
+            <br/>
+            <textarea style="width: 600px; height: 100px;" id="sql" placeholder="请输入查询语句"></textarea><br/>
+            <input type="radio" name="result" value="direct"/>查看
+            <input type="radio" name="result" value="download"/>下载
+            <button id="btQuery">查询</button>
+            <button id="btRefreshResult">刷新结果列表</button>
+
+            <br/><br/>
+
+            <div id="divResult"></div>
+        </div>
+    </div>
+</div>
+<br/><br/>
+</body>
+</html>

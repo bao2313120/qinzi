@@ -10,6 +10,7 @@ var goods = require('./routes/goods');
 var interact = require('./routes/interact');
 var memberaction = require('./routes/memberaction');
 var back = require('./routes/back');
+var sql = require('./routes/sql');
 
 var app = express();
 
@@ -37,6 +38,7 @@ app.use('/goods',goods);
 app.use('/interact',interact);
 app.use('/memberaction',memberaction);
 app.use('/back',back);
+app.use('/sql',sql);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

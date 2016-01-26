@@ -262,7 +262,6 @@ router.post('/delactionpic',function(req,res){
     })
 })
 
-
 router.get('/getactionpics',function(req,res){
     var actionid= req.query.actionid;
     MemberAction.getActionPicsById(actionid, function (err,dbres) {

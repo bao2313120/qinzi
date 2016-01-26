@@ -53,7 +53,8 @@
                     for(var i in files){
                         var pic={};
                         pic.actionid=actionid;
-                        pic.picURL=files[i].url;
+                        var picURLArr = files[i].url.match(new RegExp("\/components/ti.*"));
+                        pic.picURL=picURLArr[0];
                         data.pics.push(pic);
                     }
                     $http({
