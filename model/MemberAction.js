@@ -8,18 +8,18 @@ function MemberAction() {
 module.exports = MemberAction;
 
 MemberAction.getMainPage = function(callback){
-    var sql="select *,categorydescribe as 'describe' from member_action where ismainpage=1";
+    var sql="select *,actiondescribe as 'describe' from member_action where ismainpage=1";
     db.query(sql,callback);
 }
 
 MemberAction.getActions = function(offset,pagesize,callback){
-    var sql = "select *,categorydescribe as 'describe' from member_action where isdel=? order by time DESC";
+    var sql = "select *,actiondescribe as 'describe' from member_action where isdel=? order by time DESC";
     db.query(sql,[Util.DEL_NO],callback);
 }
 
 
 MemberAction.getActionById = function(actionid,callback){
-    var sql = "select *,categorydescribe as 'describe' from member_action where actionid=?";
+    var sql = "select *,actiondescribe as 'describe' from member_action where actionid=?";
     db.query(sql,actionid,callback);
 }
 
