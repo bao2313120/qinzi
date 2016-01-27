@@ -10,6 +10,7 @@ var ResBody = require('../model/ResBody');
 var MemberAction = require('../model/MemberAction');
 var moment = require('moment');
 var async = require('async');
+var config = require('config');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -266,6 +267,34 @@ router.get('/getactionpics',function(req,res){
     var actionid= req.query.actionid;
     MemberAction.getActionPicsById(actionid, function (err,dbres) {
         res.json(dbres);
+    })
+})
+
+router.get('/getallbrands',function(req,res){
+    Brand.getAll(function (err,dbres) {
+        for(var i in dbres){
+            dbres[i].index=Number(i)+1;
+        }
+        res.json(dbres);
+    })
+})
+
+router.get('/brandsmanager',function(req,res){
+    res.render('brandsmanager');
+})
+
+
+router.post('/addbrands',function(req,res){
+    var brands = req.body;
+    brands.picURL=brands.picURL==null?"":brands.picURL.match(new RegExp(config.imageRegex));
+    brands.brandlogopicURL = brands.brandlogopicURL==null?"":brands.brandlogopicURL.match(new RegExp(config.imageRegex));
+    Brand.insert(brands,function(err,dbres){
+        Brand.getAll(function(err,dbres1){
+            for(var i in dbres1){
+                dbres1[i].index=Number(i)+1;
+            }
+            res.json(dbres1);
+        })
     })
 })
 module.exports = router;

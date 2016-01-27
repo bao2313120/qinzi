@@ -11,5 +11,6 @@
   "pagesize":"50",
   "updatepath":"public/images/update/",
   "updatetmppath":"public/images/update/temp/",
-  "pefiximage":"/images/update/"
+  "pefiximage":"/images/update/",
+  "imageRegex":"\/components/ti.*"
 }

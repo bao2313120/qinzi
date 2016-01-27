@@ -1,24 +1,25 @@
 var db=require('../db');
 var Util=require('../util');
 var Like = require('../model/Like');
+var config = require('config');
 function MemberAction() {
 
 }
 module.exports = MemberAction;
 
 MemberAction.getMainPage = function(callback){
-    var sql="select * from member_action where ismainpage=1";
+    var sql="select *,categorydescribe as 'describe' from member_action where ismainpage=1";
     db.query(sql,callback);
 }
 
 MemberAction.getActions = function(offset,pagesize,callback){
-    var sql = "select * from member_action where isdel=? order by time DESC";
+    var sql = "select *,categorydescribe as 'describe' from member_action where isdel=? order by time DESC";
     db.query(sql,[Util.DEL_NO],callback);
 }
 
 
 MemberAction.getActionById = function(actionid,callback){
-    var sql = "select * from member_action where actionid=?";
+    var sql = "select *,categorydescribe as 'describe' from member_action where actionid=?";
     db.query(sql,actionid,callback);
 }
 
@@ -43,6 +44,7 @@ MemberAction.addUserDisSupport = function(id,actionid,actionpicid,callback){
 
 MemberAction.insertMemberActionPics = function(memberActionPic,callback){
     var sql = "insert into action_pic (actionid,picURL,actionpicnum) values (?,?,?)";
+    memberActionPic.picURL=memberActionPic.picURL==null?"":memberActionPic.picURL.match(config.imageRegex);
     db.query(sql,[Number(memberActionPic.actionid),memberActionPic.picURL,
         Number(memberActionPic.actionpicnum)],callback);
 }

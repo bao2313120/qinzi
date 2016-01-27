@@ -26,6 +26,7 @@ User.updateAddressAndPhone = function(id,address,phone,callback){
 }
 
 User.updateHeadPic = function(id,headpic,callback){
+    headpic=headpic==null?"":headpic.match(config.imageRegex);
     var sql = "update user set headpic=? where id=?";
     db.query(sql,[headpic,id],callback);
 }
