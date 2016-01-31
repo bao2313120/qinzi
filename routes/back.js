@@ -13,6 +13,16 @@ var async = require('async');
 var config = require('config');
 
 /* GET home page. */
+
+//登录拦截器
+router.use(function (req, res, next) {
+    var url = req.originalUrl;
+    if (url!="/back/gettestpage"&&!req.session.info) {
+        return res.render("login");
+    }
+    next();
+});
+
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
@@ -208,7 +218,7 @@ router.post('/dotestanswer',function(req,res){
 
 router.get('/getactions',function(req,res){
     var id = req.query.id;
-    MemberAction.getActions(null,null,function(err,dbres){
+    MemberAction.getAllActions(function(err,dbres){
         for(var i in dbres){
             dbres[i].index=Number(i)+1;
         }
@@ -224,6 +234,43 @@ router.get('/toeditaction',function(req,res){
     var actionid = req.query.actionid;
     res.locals.actionid=actionid;
     res.render('editmember');
+})
+
+router.post('/addaction',function(req,res){
+    var action = req.body;
+    action.time = new moment().format('YYYY-MM-DD');
+    MemberAction.insert(action,function(err,dbres){
+        MemberAction.getAllActions(function(err,dbres1){
+            for(var i in dbres1){
+                dbres1[i].index=Number(i)+1;
+            }
+            res.json(dbres1);
+        })
+    })
+})
+
+router.post('/nodisplayaction',function(req,res){
+    var actionid=req.body.actionid;
+    MemberAction.nodisplayAction(actionid,function(err,dbres){
+        MemberAction.getAllActions(function(err,dbres1){
+            for(var i in dbres1){
+                dbres1[i].index = Number(i)+1;
+            }
+            res.json(dbres1);
+        })
+    })
+})
+
+router.post('/displayaction',function(req,res){
+    var actionid=req.body.actionid;
+    MemberAction.displayAction(actionid,function(err,dbres){
+        MemberAction.getAllActions(function(err,dbres1){
+            for(var i in dbres1){
+                dbres1[i].index = Number(i)+1;
+            }
+            res.json(dbres1);
+        })
+    })
 })
 
 router.post('/addactionpic',function(req,res){
@@ -297,4 +344,6 @@ router.post('/addbrands',function(req,res){
         })
     })
 })
+
+
 module.exports = router;

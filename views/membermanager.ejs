@@ -4,26 +4,55 @@
         <%include left%>
         <div class="maincontent col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <div>
-                <div>
-                    <button type="button" class=" btn btn-lg btn-primary"><a href="/back/addgoods">新增会员活动</a></button>
-                </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">会员活动列表</div>
                     <table class="table">
                         <tr>
                             <th data-field="index">序号</th>
                             <th data-field="actionname" >活动名称</th>
+                            <th data-field="describe" >活动描述</th>
+                            <th data-field="widepicURL" >活动图</th>
+                            <th data-field="time" >时间</th>
                             <th data-field="isdel">是否展示</th>
                         </tr>
                         <tr ng-repeat="data in tabledata">
                             <td>{{data.index}}</td>
                             <td><a href="/back/toeditaction?actionid={{data.actionid}}">{{data.actionname}}</a></td>
+                            <td>{{data.describe}}</td>
+                            <td>{{data.widepicURL}}</td>
+                            <td>{{data.time}}</td>
                             <td>
-                                <button ng-click="nocommend(data.actionid)" ng-if="data.isdel==1">取消展示</button>
-                                <button ng-click="commend(data.actionid)" ng-if="data.isdel==2">展示</button>
+                                <button ng-click="nodisplayAction(data.actionid)" ng-if="data.isdel==1">取消展示</button>
+                                <button ng-click="displayAction(data.actionid)" ng-if="data.isdel==2">展示</button>
                             </td>
                         </tr>
                     </table>
+                    <div>
+                        <button type="button" class="glyphicon glyphicon-plus pull-right " data-toggle="modal" data-target="#myModal"></button>
+                    </div>
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">新品牌</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>活动信息.</p>
+                                    活动名称:<input type="text" class="form-control" ng-model="action.name"  required>
+                                    活动描述:<input type="text" class="form-control" ng-model="action.describe"  required>
+                                    活动图片:<input type="text" id="picURL" class="form-control" ng-model="action.widepicURL" required>
+                                    <a href="javascript:;" onclick="moxman.browse({view: 'thumbs', fields: 'widepicURL', extensions:'jpg,gif,png'});" class="btn">Pick file</a>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-success" ng-click="addaction()" data-dismiss="modal" >Add</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -43,44 +72,60 @@
             }).success(function(resObj){
                 for( var i in resObj){
                     if(resObj[i].actionid==1){
-                        resObj.splice(0,1);
+                        resObj.splice(i,1);
+                    }
+                }
+                $scope.tabledata=resObj;
+            })
+        }
+
+        $scope.addaction = function(){
+            var action = $scope.action;
+            $http({
+                url:"/back/addaction",
+                method:"POST",
+                data:action
+            }).success(function(resObj){
+                for( var i in resObj){
+                    if(resObj[i].actionid==1){
+                        resObj.splice(i,1);
                     }
                 }
                 $scope.tabledata=resObj;
             })
         }
         //推荐
-        $scope.commend =function(goodsid){
+        $scope.displayAction =function(actionid){
+            var data={};
+            data.actionid=actionid;
             $http({
-                url:"/back/commendonegoods",
-                method:"GET",
-                params: {
-                    'goodsid': goodsid
-                }
-            }).success(function(){
-                var tabledata=$scope.tabledata;
-                for(var i in tabledata){
-                    if(tabledata[i].goodsid==goodsid){
-                        tabledata[i].iscommend=1;
+                url:"/back/displayaction",
+                method:"POST",
+                data:data
+            }).success(function(resObj){
+                for( var i in resObj){
+                    if(resObj[i].actionid==1){
+                        resObj.splice(i,1);
                     }
                 }
+                $scope.tabledata=resObj;
             })
         }
         //取消推荐
-        $scope.nocommend = function(goodsid){
+        $scope.nodisplayAction = function(actionid){
+            var data={};
+            data.actionid=actionid;
             $http({
-                url:"/back/discommendonegoods",
-                method:"GET",
-                params: {
-                    'goodsid': goodsid
-                }
-            }).success(function(){
-                var tabledata=$scope.tabledata;
-                for(var i in tabledata){
-                    if(tabledata[i].goodsid==goodsid){
-                        tabledata[i].iscommend=2;
+                url:"/back/nodisplayaction",
+                method:"POST",
+                data:data
+            }).success(function(resObj){
+                for( var i in resObj){
+                    if(resObj[i].actionid==1){
+                        resObj.splice(i,1);
                     }
                 }
+                $scope.tabledata=resObj;
             })
         }
     })

@@ -117,6 +117,7 @@ function saveResult(time, table, callback) {
 }
 
 router.get('/get-sql', function(req, res) {
+    var name = req.query.name;
     var json = {name: name};
     CustomSql.getSql(name, function(err, sql) {
         res.set('Content-Type', 'text/json');

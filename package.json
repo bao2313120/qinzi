@@ -24,6 +24,7 @@
     "formidable":"1.0.17",
     "uuid":"2.0.1",
     "mkdirp":"0.5.1",
-    "easy-zip": "0.0.4"
+    "easy-zip": "0.0.4",
+    "express-session":"*"
   }
 }

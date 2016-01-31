@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var goods = require('./routes/goods');
@@ -31,6 +32,11 @@ app.use(bodyParser({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(__dirname + "/media"));
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true
+}));
 
 app.use('/', routes);
 app.use('/users', users);
@@ -39,6 +45,7 @@ app.use('/interact',interact);
 app.use('/memberaction',memberaction);
 app.use('/back',back);
 app.use('/sql',sql);
+app.use('/login', require('./routes/login'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

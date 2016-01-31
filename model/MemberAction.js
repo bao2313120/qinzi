@@ -13,10 +13,14 @@ MemberAction.getMainPage = function(callback){
 }
 
 MemberAction.getActions = function(offset,pagesize,callback){
-    var sql = "select *,actiondescribe as 'describe' from member_action where isdel=? order by time DESC";
-    db.query(sql,[Util.DEL_NO],callback);
+    var sql = "select *,actiondescribe as 'describe' from member_action where isdel=? order by time DESC limit ?,?";
+    db.query(sql,[Util.DEL_NO,offset,pagesize],callback);
 }
 
+MemberAction.getAllActions = function(callback){
+    var sql = "select *,actiondescribe as 'describe' from member_action where isdel=? order by time DESC";
+    db.query(sql,Util.DEL_NO,callback);
+}
 
 MemberAction.getActionById = function(actionid,callback){
     var sql = "select *,actiondescribe as 'describe' from member_action where actionid=?";
@@ -49,6 +53,12 @@ MemberAction.insertMemberActionPics = function(memberActionPic,callback){
         Number(memberActionPic.actionpicnum)],callback);
 }
 
+MemberAction.insert = function(action,callback){
+    action.widepicURL = action.widepicURL==null?"":action.widepicURL.match(new RegExp(config.imageRegex))
+    var sql = "insert into member_action (actionname,actiondescribe,ismainpage,widepicURL,time) values (?,?,?,?,?)";
+    db.query(sql,[action.name,action.describe,2,action.widepicURL,action.time],callback)
+}
+
 MemberAction.getMaxpicNumByActionId = function(actionid,callback){
     var sql = "select max(actionpicnum)+1 as actionpicnum from action_pic where actionid=?";
     db.query(sql,actionid,callback);
@@ -56,6 +66,16 @@ MemberAction.getMaxpicNumByActionId = function(actionid,callback){
 MemberAction.getActionPicBypicURL = function(picURL,callback){
     var sql = "select * from action_pic where picURL=?";
     db.query(sql,picURL,callback);
+}
+
+MemberAction.nodisplayAction = function(actionid,callback){
+    var sql = "update member_action set isdel=? where actionid=?";
+    db.query(sql,[Util.DEL_YES,actionid],callback)
+}
+
+MemberAction.displayAction = function(actionid,callback){
+    var sql = "update member_action set isdel=? where actionid=?";
+    db.query(sql,[Util.DEL_NO,actionid],callback)
 }
 
 MemberAction.delImageByActionPicId = function(actionpicid,callback){

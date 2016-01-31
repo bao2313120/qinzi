@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>登陆</title>
+    <link rel='stylesheet' href='/components/bootstrap/dist/css/bootstrap.min.css'/>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <script src="/components/jquery/dist/jquery.min.js"></script>
+    <script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/components/angularjs/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-cookies.js"></script>
+</head>
+
+<body>
+<div class="container login" ng-app="qinzi"  ng-controller="adminController">
+    <form class="form-signin">
+        <h2 class="form-signin-heading">登陆</h2>
+        <label for="inputEmail" class="sr-only">用户名</label>
+        <input type="text" class="form-control "  style="width: 20% " ng-model="name" placeholder="用户名"  autofocus>
+        <label for="inputPassword" class="sr-only">密码</label>
+        <input type="password" class="form-control" style="width: 20%" ng-model="pwd" placeholder="密码" >
+        <div class="checkbox">
+            <label>
+                <input type="checkbox"  ng-model="remember">记住我
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" style="width: 15%" type="submit" ng-click="login()">登陆</button>
+    </form>
+    <div style="color:red"> {{info}}</div>
+</div>
+</body>
+<script>
+    var app = angular.module('qinzi',['ngCookies']);
+    app.controller('adminController', ['$scope', '$http','$cookies', function($scope, $http,$cookies) {
+        $scope.info = null;
+        $scope.name = $cookies.name;
+        $scope.pwd = $cookies.pwd;
+
+        $scope.login = function(){
+            var data={};
+            data.name=$scope.name;
+            data.pwd=$scope.pwd;
+            data.remember=$scope.remember;
+           $http({
+               url: '/login/submit',
+               method: "POST",
+               data:data
+           }).success(function(resInfo){
+               if(resInfo == 'success'){
+                   window.location.href = '/';
+               }else{
+                   $scope.info = resInfo;
+               }
+           });
+       }
+
+    }]);
+
+</script>
+</html>

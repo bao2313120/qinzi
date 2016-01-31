@@ -30,7 +30,7 @@
 
 </head>
 <body ng-app="qinzi">
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="topController">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="/">
@@ -41,19 +41,11 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        个人中心 <b class="caret"></b>
-                    </a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">登陆用户:{{session.info.name}}</a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">注销登陆</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">切换用户</a></li>
+                        <li><a href="#" ng-click="quit()">登出</a></li>
                     </ul>
                 </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="/admin/system/systemSetting">系统配置</a></li>
-                <li><a href="#">帮助中心</a></li>
             </ul>
             <form class="navbar-form navbar-right">
                 <input type="text" class="form-control" placeholder="🔍搜索...">
@@ -63,4 +55,37 @@
 </nav>
 <script>
     var app = angular.module('qinzi', []);
+    app.controller('topController', function($scope, $http) {
+        getSession();
+
+        $scope.quit = function(){
+            $http({
+                url: '/login/quit',
+                method: "POST"
+            }).success(function(resObj){
+                window.location.href = '/login';
+            });
+        }
+
+        function getSession(){
+            $http({
+                url: '/login/getSession',
+                method: "GET"
+            }).success(function(resObj){
+                console.log(resObj);
+                $scope.session = resObj;
+                if(resObj.appName == null){
+                    $scope.gameSel = '';
+                }else{
+                    $scope.gameSel = resObj.appName;
+                }
+                if(resObj.info.name == 'root'){
+                    $scope.root = true;
+                }else{
+                    $scope.root = false;
+                }
+            });
+        }
+
+    });
 </script>

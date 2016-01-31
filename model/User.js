@@ -72,3 +72,8 @@ User.insertOrder = function(order,callback){
     db.query(sql,[order.id,order.name,order.phone,order.address,
         order.pushphone,order.viplevel,order.vipprice],callback);
 }
+
+User.login = function (name,pwd,callback) {
+    var sql = "select * from useradmin where name=? and password=?";
+    db.query(sql,[name,pwd],callback);
+}
