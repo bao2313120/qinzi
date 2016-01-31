@@ -25,13 +25,12 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser({
-  uploadDir:"media/upload/",
+  uploadDir:"./media/upload",
   keepExtensions:true,
   limit:10000000,
   defer:true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(__dirname + "/media"));
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
