@@ -130,8 +130,12 @@ router.post('/updateAddressPhoneNum',function(req,res){
 router.post('/uploadHeadPic',function(req,res){
     console.log(1+""+JSON.stringify(req.body));
     console.log(2+""+req.files);
-    return res.end();
-    //var form = new formidable.IncomingForm();
+    var form = new formidable.IncomingForm();
+    form.parse(req,function(err,fields,files){
+        console.log(3+""+fields);
+        console.log(4+""+fields);
+        return res.end();
+    }
     //form.uploadDir = config.updatetmppath;
     //var body=new ResBody();
     //var id=req.header('UserId');
