@@ -76,10 +76,11 @@ router.post('/contribute',function(req,res){
     form.uploadDir = config.updatetmppath;
     var id=req.header('id');
     var message = req.header('message');
-    console.info(req.body);
+    console.log(JSON.stringify(req.body));
     form.parse(req,function(err,fields,files){
         var body=new ResBody();
-        console.info(files);
+        console.log(1+""+JSON.stringify(fields));
+        console.log(2+""+JSON.stringify(files));
         console.info(files.length);
         var time = new moment().format("YYYY-MM-DD");
         if(id==null||id==""){
