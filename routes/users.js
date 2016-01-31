@@ -132,8 +132,8 @@ router.post('/uploadHeadPic',function(req,res){
     console.log(2+""+req.files);
     var form = new formidable.IncomingForm();
     form.parse(req,function(err,fields,files){
-        console.log(3+""+fields);
-        console.log(4+""+fields);
+        console.log(3+""+JSON.stringify(fields));
+        console.log(4+""+JSON.stringify(files));
         return res.end();
     })
     //form.uploadDir = config.updatetmppath;
