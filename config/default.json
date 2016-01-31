@@ -12,5 +12,12 @@
   "updatepath":"public/images/update/",
   "updatetmppath":"public/images/update/temp/",
   "pefiximage":"/images/update/",
-  "imageRegex":"\/components/ti.*"
+  "imageRegex":"\/components/ti.*",
+  "mysql_session":{
+    "host": "123.57.188.10",
+    "port": 3306,
+    "user": "qinzi",
+    "password": "qinzi",
+    "database": "qinzi"
+  }
 }
