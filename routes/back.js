@@ -15,13 +15,13 @@ var config = require('config');
 /* GET home page. */
 
 //登录拦截器
-router.use(function (req, res, next) {
-    var url = req.originalUrl;
-    if (url!="/back/gettestpage"&&!req.session.info) {
-        return res.render("login");
-    }
-    next();
-});
+//router.use(function (req, res, next) {
+//    var url = req.originalUrl;
+//    if (url!="/back/gettestpage"&&!req.session.info) {
+//        return res.render("login");
+//    }
+//    next();
+//});
 
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
