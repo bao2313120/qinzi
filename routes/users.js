@@ -135,7 +135,7 @@ router.post('/uploadHeadPic',function(req,res){
         console.log(3+""+fields);
         console.log(4+""+fields);
         return res.end();
-    }
+    })
     //form.uploadDir = config.updatetmppath;
     //var body=new ResBody();
     //var id=req.header('UserId');
