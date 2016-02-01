@@ -131,16 +131,11 @@ router.post('/updateAddressPhoneNum',function(req,res){
     })
 })
 
-router.post('/uploadHeadPic',multipartMiddleware,function(req,res){
+router.post('/uploadHeadPic',function(req,res){
     console.log(1+""+util.inspect(req.body));
     console.log(2+""+util.inspect(req.files));
     var form = new formidable.IncomingForm();
     form.parse(req,function(err,fields,files){
-        for (var i in fields){
-            fs.writeFile("aa.png",fields[i],function(err){
-                console.log("save");
-            })
-        }
         console.log(3+""+util.inspect(fields));
         console.log(4+""+util.inspect(files));
         return res.end();
