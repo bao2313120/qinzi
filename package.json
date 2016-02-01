@@ -26,6 +26,7 @@
     "mkdirp":"0.5.1",
     "easy-zip": "0.0.4",
     "express-session":"*",
-    "express-mysql-session":"0.4.4"
+    "express-mysql-session":"0.4.4",
+    "connect-multiparty":"*"
   }
 }

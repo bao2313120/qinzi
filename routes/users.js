@@ -11,8 +11,11 @@ var formidable = require('formidable');
 var fs = require('fs');
 var async = require('async');
 var config  = require('config');
+var m= require('connect-multiparty');
 module.exports = router;
 
+
+var multipartMiddleware = m();
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource!!!');
@@ -128,7 +131,7 @@ router.post('/updateAddressPhoneNum',function(req,res){
     })
 })
 
-router.post('/uploadHeadPic',function(req,res){
+router.post('/uploadHeadPic',multipartMiddleware,function(req,res){
     console.log(1+""+util.inspect(req.body));
     console.log(2+""+util.inspect(req.files));
     var form = new formidable.IncomingForm();
