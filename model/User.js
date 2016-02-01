@@ -1,4 +1,5 @@
 var db=require('../db');
+var config = require('config');
 
 function User() {
 
