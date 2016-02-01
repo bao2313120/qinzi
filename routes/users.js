@@ -132,52 +132,42 @@ router.post('/updateAddressPhoneNum',function(req,res){
 })
 
 router.post('/uploadHeadPic',function(req,res){
-    console.log(1+""+util.inspect(req.body));
-    console.log(2+""+util.inspect(req.files));
     var form = new formidable.IncomingForm();
+    form.uploadDir = config.updatetmppath;
+    var body=new ResBody();
+    var id=req.header('UserId');
+    console.info(id);
+    if(id==null||id==""){
+        body.code=Util.ERR_LOGIN_NO;
+        body.failure=Util.ERR_LOGIN_NO_FAILURE;
+        return res.json(body);
+    }
     form.parse(req,function(err,fields,files){
-        console.log(3+""+util.inspect(fields));
-        console.log(4+""+util.inspect(files));
-        return res.end();
+        var body=new ResBody();
+        console.info()
+        async.eachSeries(files,function(file,cb){
+            var fileName = Util.getFileName(file);
+            var updateDir = config.updatepath+fileName;
+            fs.rename(file.path,updateDir,function(err){
+                console.log(err);
+                var loadPath=config.pefiximage+fileName;
+                User.updateHeadPic(id,loadPath,function(err,dbres){
+                    if(err){
+                        body.code=Util.FAIL;
+                    }
+                    cb(null,null);
+                })
+            });
+        },function(err){
+            var data={};
+            User.query(id,function(err,user){
+                data.user=user;
+                body.data.push(data);
+                res.json(body);
+            })
+
+        })
     })
-    //form.uploadDir = config.updatetmppath;
-    //var body=new ResBody();
-    //var id=req.header('UserId');
-    //fs.writeFile("aa.png",req.body,function(err){
-    //    console.info("save");
-    //})
-    //console.info(id);
-    //if(id==null||id==""){
-    //    body.code=Util.ERR_LOGIN_NO;
-    //    body.failure=Util.ERR_LOGIN_NO_FAILURE;
-    //    return res.json(body);
-    //}
-    //form.parse(req,function(err,fields,files){
-    //    var body=new ResBody();
-    //    console.info()
-    //    async.eachSeries(files,function(file,cb){
-    //        var fileName = Util.getFileName(file);
-    //        var updateDir = config.updatepath+fileName;
-    //        fs.rename(file.path,updateDir,function(err){
-    //            console.log(err);
-    //            var loadPath=config.pefiximage+fileName;
-    //            User.updateHeadPic(id,loadPath,function(err,dbres){
-    //                if(err){
-    //                    body.code=Util.FAIL;
-    //                }
-    //                cb(null,null);
-    //            })
-    //        });
-    //    },function(err){
-    //        var data={};
-    //        User.query(id,function(err,user){
-    //            data.user=user;
-    //            body.data.push(data);
-    //            res.json(body);
-    //        })
-    //
-    //    })
-    //})
 })
 
 router.post('/updatePetName',function(req,res){
