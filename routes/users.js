@@ -6,6 +6,7 @@ var ResBody = require('../model/ResBody');
 var Like = require('../model/Like');
 var Goods = require('../model/Goods');
 var Util = require('../util');
+var util = require('util');
 var formidable = require('formidable');
 var fs = require('fs');
 var async = require('async');
@@ -128,12 +129,17 @@ router.post('/updateAddressPhoneNum',function(req,res){
 })
 
 router.post('/uploadHeadPic',function(req,res){
-    console.log(1+""+JSON.stringify(req.body));
-    console.log(2+""+req.files);
+    console.log(1+""+util.inspect(req.body));
+    console.log(2+""+util.inspect(req.files));
     var form = new formidable.IncomingForm();
     form.parse(req,function(err,fields,files){
-        console.log(3+""+JSON.stringify(fields));
-        console.log(4+""+JSON.stringify(files));
+        for (var i in fields){
+            fs.writeFile("aa.png",fields[i],function(err){
+                console.log("save");
+            })
+        }
+        console.log(3+""+util.inspect(fields));
+        console.log(4+""+util.inspect(files));
         return res.end();
     })
     //form.uploadDir = config.updatetmppath;
