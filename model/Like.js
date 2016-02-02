@@ -89,6 +89,11 @@ Like.setIsActionPicLike = function(id,actionid,actionpics,callback){
             return callback(null,actionpics);
         })
     }else{
+        for(var i in actionpics){
+            if(actionpics[i].issupport==null||actionpics.issupport==""){
+                actionpics[i].issupport=Util.LIKE_NULL;
+            }
+        }
         return callback(null,actionpics);
     }
 }
