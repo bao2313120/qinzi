@@ -144,7 +144,7 @@ router.post('/uploadHeadPic',function(req,res){
     }
     form.parse(req,function(err,fields,files){
         var body=new ResBody();
-        console.info()
+        console.log(util.inspect(files));
         async.eachSeries(files,function(file,cb){
             var fileName = Util.getFileName(file);
             var updateDir = config.updatepath+fileName;

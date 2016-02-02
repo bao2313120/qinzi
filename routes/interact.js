@@ -79,7 +79,6 @@ router.post('/contribute',function(req,res){
     console.log(JSON.stringify(req.body));
     form.parse(req,function(err,fields,files){
         var body=new ResBody();
-        console.log(1+""+JSON.stringify(fields));
         console.log(2+""+JSON.stringify(files));
         console.info(files.length);
         var time = new moment().format("YYYY-MM-DD");
