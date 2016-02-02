@@ -12,6 +12,7 @@ var fs = require('fs');
 var async = require('async');
 var config  = require('config');
 var m= require('connect-multiparty');
+var pingpp = require('pingpp')('sk_test_ibbTe5jLGCi5rzfH4OqPW9KC');
 module.exports = router;
 
 
@@ -275,5 +276,48 @@ router.post('/doOrder',function(req,res){
         }
         body.data.push(order);
         res.json(body);
+    })
+})
+
+router.post('/payOrder',function(req,res){
+    var id = req.body.id;
+    var channal =req.body.channal;
+    if(channal=="alipay"){
+        payOrder(req,res);
+    }
+})
+
+var payOrder = function(req,res){
+    var body = new ResBody();
+    pingpp.charges.create({
+        subject: "Your Subject",
+        body: "Your Body",
+        amount: 100,
+        order_no: "123456789",
+        channel: "alipay",
+        currency: "cny",
+        client_ip: "127.0.0.1",
+        app: {id: "app_1Gqj58ynP0mHeX1q"}
+    },function(err,charge){
+        if(err){
+            body.code=Util.FAIL;
+            return res.json(body);
+        }
+        return res.json(body);
+    })
+}
+
+router.post('/paysuccess',function(req,res){
+    var pay={};
+    var data = req.body;
+    pay.data=data;
+    var orderid=data.data.object.order_no;
+    User.getOrderByOrderId(orderid,function(err,dbres){
+        var id = dbres[i].id;
+        pay.id=id;
+        User.updateVipLevel(dbres[i].viplevel,Util.errWarn);
+        User.insertPayDetail(pay,function(err,dbres){
+            return res.end();
+        })
     })
 })

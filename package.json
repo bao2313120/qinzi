@@ -27,6 +27,7 @@
     "easy-zip": "0.0.4",
     "express-session":"*",
     "express-mysql-session":"0.4.4",
-    "connect-multiparty":"*"
+    "connect-multiparty":"*",
+    "pingpp":"*"
   }
 }
