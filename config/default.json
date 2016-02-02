@@ -9,9 +9,9 @@
     "database": "qinzi"
   },
   "pagesize":"50",
-  "updatepath":"public/images/update/",
+  "updatepath":"public/components/tinymce/plugins/moxiemanager/data/files/",
   "updatetmppath":"public/images/update/temp/",
-  "pefiximage":"/images/update/",
+  "pefiximage":"/components/tinymce/plugins/moxiemanager/data/files/",
   "imageRegex":"\/components/ti.*",
   "mysql_session":{
     "host": "123.57.188.10",
