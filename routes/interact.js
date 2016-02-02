@@ -44,8 +44,10 @@ router.post('/support',function(req,res){
 
     }else if(supporttype==Util.SUPPORT_TYPE_ACTION){
         Like.getAllActionLikeByIdAndActionId(id,actionid,function(err,dbres){
-            if(dbres!=null&&dbres.length>0){
-                return res.json(body);
+            for(var i in dbres){
+                if(dbres[i].actionpicid==actionpicid){
+                    return res.json(body);
+                }
             }
             supportAction(actionid,actionpicid,id,isLike,function(err1,dbres1){
                 return res.json(body);
