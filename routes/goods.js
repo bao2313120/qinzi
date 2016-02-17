@@ -51,9 +51,12 @@ router.get('/getrecomment',function(req,res){
                             for(var j in dbres1){
                                 if(dbres[i].goodsid==dbres1[j].goodsid){
                                     dbres[i].issupport=dbres1[j].islike;
-                                }else{
-                                    dbres[i].issupport =Util.LIKE_NULL;
                                 }
+                            }
+                        }
+                        for(var i in dbres){
+                            if(dbres[i].issupport==null||dbres.issupport==""){
+                                dbres[i].issupport=Util.LIKE_NULL;
                             }
                         }
                         var timeRes=setrecommentListTime(dbres);
@@ -61,6 +64,11 @@ router.get('/getrecomment',function(req,res){
                         body.data.push(data);
                         return res.json(body);
                     }else{
+                        for(var i in dbres){
+                            if(dbres[i].issupport==null||dbres.issupport==""){
+                                dbres[i].issupport=Util.LIKE_NULL;
+                            }
+                        }
                         var timeRes=setrecommentListTime(dbres);
                         data.recommentlist=timeRes;
                         body.data.push(data);
@@ -68,6 +76,11 @@ router.get('/getrecomment',function(req,res){
                     }
                 })
             }else{
+                for(var i in dbres){
+                    if(dbres[i].issupport==null||dbres.issupport==""){
+                        dbres[i].issupport=Util.LIKE_NULL;
+                    }
+                }
                 var timeRes=setrecommentListTime(dbres);
                 data.recommentlist=timeRes;
                 body.data.push(data);

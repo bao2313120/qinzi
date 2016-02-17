@@ -75,10 +75,12 @@ Like.setIsActionPicLike = function(id,actionid,actionpics,callback){
                     for(var j in dbres1){
                         if(actionpics[i].actionpicid==dbres1[j].actionpicid){
                             actionpics[i].issupport=dbres1[j].islike;
-                            break;
-                        }else{
-                            actionpics[i].issupport =Util.LIKE_NULL;
                         }
+                    }
+                }
+                for(var i in actionpics){
+                    if(actionpics[i].issupport==null||actionpics[i].issupport==""){
+                        actionpics[i].issupport=Util.LIKE_NULL
                     }
                 }
             }else{
@@ -89,6 +91,11 @@ Like.setIsActionPicLike = function(id,actionid,actionpics,callback){
             return callback(null,actionpics);
         })
     }else{
+        for(var i in actionpics){
+            if(actionpics[i].issupport==null||actionpics.issupport==""){
+                actionpics[i].issupport=Util.LIKE_NULL;
+            }
+        }
         return callback(null,actionpics);
     }
 }

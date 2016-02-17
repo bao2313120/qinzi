@@ -22,7 +22,8 @@
     "angularjs":"*",
     "angular-ui-codemirror":"*",
     "angular-xeditable":"*",
-    "tinymce":"4.3"
+    "tinymce":"4.3",
+    "angular-cookies":"*"
   },
   "resolutions": {
     "moment": ">=2.5.0"

@@ -44,8 +44,10 @@ router.post('/support',function(req,res){
 
     }else if(supporttype==Util.SUPPORT_TYPE_ACTION){
         Like.getAllActionLikeByIdAndActionId(id,actionid,function(err,dbres){
-            if(dbres!=null&&dbres.length>0){
-                return res.json(body);
+            for(var i in dbres){
+                if(dbres[i].actionpicid==actionpicid){
+                    return res.json(body);
+                }
             }
             supportAction(actionid,actionpicid,id,isLike,function(err1,dbres1){
                 return res.json(body);
@@ -79,7 +81,6 @@ router.post('/contribute',function(req,res){
     console.log(JSON.stringify(req.body));
     form.parse(req,function(err,fields,files){
         var body=new ResBody();
-        console.log(1+""+JSON.stringify(fields));
         console.log(2+""+JSON.stringify(files));
         console.info(files.length);
         var time = new moment().format("YYYY-MM-DD");

@@ -29,7 +29,12 @@ MemberAction.getActionById = function(actionid,callback){
 
 MemberAction.getActionPicsById = function(actionid,callback){
     var sql = "select * from action_pic where actionid=? order by actionpicnum ASC ";
-    db.query(sql,actionid,callback);
+    db.query(sql,actionid,function(err,dbres){
+        for(var i in dbres){
+            dbres[i].support=dbres[i].actsupport+dbres[i].support;
+        }
+        callback(err,dbres);
+    });
 }
 
 MemberAction.addUserActSupport = function(id,actionid,actionpicid,callback){

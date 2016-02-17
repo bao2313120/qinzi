@@ -76,6 +76,21 @@ User.insertOrder = function(order,callback){
         order.pushphone,order.viplevel,order.vipprice],callback);
 }
 
+User.getOrderByOrderId= function(orderid,callback){
+    var sql= "select * from userorder where orderid=?";
+    db.query(sql,orderid,callback);
+}
+
+User.insertPayDetail = function(pay,callback){
+    var sql = "insert into paydetail (id,orderid,data) values (?,?,?)";
+    db.query(sql,[pay.id,pay.orderid,pay.data],callback);
+}
+
+User.updateVipLevel = function(vipLevel,callback){
+    var sql ="update viplevel set viplevel=?";
+    db.query(sql,vipLevel,callback);
+}
+
 User.login = function (name,pwd,callback) {
     var sql = "select * from useradmin where name=? and password=?";
     db.query(sql,[name,pwd],callback);
