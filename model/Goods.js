@@ -1,6 +1,7 @@
 var db=require('../db');
 var Util=require('../util');
 var Like=require('./Like');
+var config =require('config');
 function Goods() {
 
 }
@@ -21,6 +22,7 @@ Goods.getMoreGoods = function(offset,pageSize,callback){
 
 Goods.insert = function(goods,callback){
     var sql = "insert into goods("+COLUMN+") values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    var a =goods.picURL.match(config.imageRegex);
     goods.picURL=goods.picURL==null?"":goods.picURL.match(config.imageRegex);
     goods.widepicURL=goods.widepicURL==null?"":goods.widepicURL.match(config.imageRegex);
     db.query(sql,[goods.picURL,goods.category,goods.poster,goods.webaddr,

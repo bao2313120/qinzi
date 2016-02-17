@@ -27,9 +27,11 @@ User.updateAddressAndPhone = function(id,address,phone,callback){
 }
 
 User.updateHeadPic = function(id,headpic,callback){
-    headpic=headpic==null?"":headpic.match(config.imageRegex);
+    headpic=headpic==null?"":headpic.match(config.imageRegex)[0];
     var sql = "update user set headpic=? where id=?";
-    db.query(sql,[headpic,id],callback);
+    db.query(sql,[headpic,id],function(err,dbres){
+        callback(err,dbres);
+    });
 }
 
 User.updatePetName = function(id,petname,callback){
