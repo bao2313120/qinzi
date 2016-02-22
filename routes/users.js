@@ -291,7 +291,8 @@ router.post('/payOrder',function(req,res){
 var payOrder = function(req,res){
     var body = new ResBody();
     var orderno = req.body.orderid;
-    var clientip=req.body.clientip;
+    var clientip=req.ip;
+    console.log(clientip);
     pingpp.charges.create({
         subject: "netgift",
         body: "Your Body",
@@ -302,6 +303,7 @@ var payOrder = function(req,res){
         client_ip: clientip,
         app: {id: "app_90ivf1PqfTaHiff1"}
     },function(err,charge){
+        console.log(charge);
         if(err){
             body.code=Util.FAIL;
             return res.json(body);
