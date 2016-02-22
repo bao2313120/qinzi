@@ -12,7 +12,7 @@ var fs = require('fs');
 var async = require('async');
 var config  = require('config');
 var m= require('connect-multiparty');
-var pingpp = require('pingpp')('sk_test_ibbTe5jLGCi5rzfH4OqPW9KC');
+var pingpp = require('pingpp')('sk_test_SuzTyDDiXP8OjvjnnHeXrjfD');
 module.exports = router;
 
 
@@ -290,20 +290,23 @@ router.post('/payOrder',function(req,res){
 
 var payOrder = function(req,res){
     var body = new ResBody();
+    var orderno = req.body.orderid;
+    var clientip=req.body.clientip;
     pingpp.charges.create({
-        subject: "Your Subject",
+        subject: "netgift",
         body: "Your Body",
         amount: 100,
-        order_no: "123456789",
+        order_no: orderno,
         channel: "alipay",
         currency: "cny",
-        client_ip: "127.0.0.1",
-        app: {id: "app_1Gqj58ynP0mHeX1q"}
+        client_ip: clientip,
+        app: {id: "app_90ivf1PqfTaHiff1"}
     },function(err,charge){
         if(err){
             body.code=Util.FAIL;
             return res.json(body);
         }
+        body.charge=charge;
         return res.json(body);
     })
 }
