@@ -304,12 +304,7 @@ var payOrder = function(req,res){
         app: {id: "app_90ivf1PqfTaHiff1"}
     },function(err,charge){
         console.log(charge);
-        if(err){
-            body.code=Util.FAIL;
-            return res.json(body);
-        }
-        body.charge=charge;
-        return res.json(body);
+        return res.json(charge);
     })
 }
 
@@ -321,7 +316,8 @@ router.post('/paysuccess',function(req,res){
     User.getOrderByOrderId(orderid,function(err,dbres){
         var id = dbres[i].id;
         pay.id=id;
-        User.updateVipLevel(dbres[i].viplevel,Util.errWarn);
+        User.updateVipLevel(id,dbres[i].viplevel,Util.errWarn);
+        User.updateOrderPayStatus(orderid,Util.errWarn);
         User.insertPayDetail(pay,function(err,dbres){
             return res.end();
         })

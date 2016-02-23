@@ -13,7 +13,7 @@ Question.getAllTest = function(callback){
 
 Question.insertTest = function(test,callback){
     var sql = "insert into test (test) values(?)";
-    db.query(sql,callback);
+    db.query(sql,[test],callback);
 }
 
 Question.disUseTest = function(testid,callback){

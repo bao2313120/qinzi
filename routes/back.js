@@ -145,6 +145,15 @@ router.get('/getalltest',function(req,res){
     })
 })
 
+router.post('/addtest',function(req,res){
+    var testname=req.body.testname;
+    Question.insertTest(testname,function(err,dbres){
+        Question.getAllTest(function(err,dbres1){
+            res.send(dbres1);
+        })
+    })
+})
+
 router.get('/toeditquestion',function(req,res){
     var testid=req.query.testid;
     res.render('editquestion',{testid:testid});

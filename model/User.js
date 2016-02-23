@@ -1,5 +1,6 @@
 var db=require('../db');
 var config = require('config');
+var Util = require('../util');
 
 function User() {
 
@@ -86,12 +87,17 @@ User.insertPayDetail = function(pay,callback){
     db.query(sql,[pay.id,pay.orderid,pay.data],callback);
 }
 
-User.updateVipLevel = function(vipLevel,callback){
-    var sql ="update viplevel set viplevel=?";
-    db.query(sql,vipLevel,callback);
+User.updateVipLevel = function(id,vipLevel,callback){
+    var sql ="update user set viplevel=? where id=? ";
+    db.query(sql,[vipLevel,id],callback);
 }
 
 User.login = function (name,pwd,callback) {
     var sql = "select * from useradmin where name=? and password=?";
     db.query(sql,[name,pwd],callback);
+}
+
+User.updateOrderPayStatus = function(orderid,callback){
+    var sql = "update userorder set ispay=? where orderid=?";
+    db.query(sql,[Util.PAY_YES,orderid],callback)
 }

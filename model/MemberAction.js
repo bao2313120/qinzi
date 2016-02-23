@@ -13,7 +13,7 @@ MemberAction.getMainPage = function(callback){
 }
 
 MemberAction.getActions = function(offset,pagesize,callback){
-    var sql = "select *,actiondescribe as 'describe' from member_action where isdel=? order by time DESC limit ?,?";
+    var sql = "select *,actiondescribe as 'describe' from member_action where isdel=? and actionid <>1 order by time DESC limit ?,?";
     db.query(sql,[Util.DEL_NO,offset,pagesize],callback);
 }
 
