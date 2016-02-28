@@ -21,3 +21,8 @@ Brand.getBrandById = function(brandid,callback){
     db.query(sql,brandid,callback);
 }
 
+Brand.editBrands = function(brands,callback){
+    var sql = "update brand set name=?,branddescribe=?,picURL=?,brandlogopicURL=? where brandid=?";
+    db.query(sql,[brands.name,brands.branddescribe,brands.picURL,brands.brandlogopicURL,brands.brandid],callback);
+}
+
