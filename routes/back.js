@@ -369,4 +369,17 @@ router.post('/editbrands',function(req,res){
     })
 })
 
+
+router.post('/delbrands',function(req,res){
+    var brandsid=req.body.brandsid;
+    Brand.delBrandsByBrandsId(brandsid,function(err,dbres){
+        Util.errWarn(err);
+        Brand.getAll(function(err,dbres1){
+            for(var i in dbres1){
+                dbres1[i].index=Number(i)+1;
+            }
+            res.json(dbres1);
+        })
+    })
+})
 module.exports = router;

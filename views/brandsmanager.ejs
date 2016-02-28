@@ -8,11 +8,12 @@
                     <div class="panel-heading">品牌列表</div>
                     <table class="table">
                         <tr>
-                            <th class="col-sm-2">序号</th>
-                            <th class="col-sm-2">品牌名称</th>
-                            <th class="col-sm-2">品牌描述</th>
-                            <th class="col-sm-2">品牌图片</th>
-                            <th class="col-sm-2">品牌logo</th>
+                            <th>序号</th>
+                            <th>品牌名称</th>
+                            <th>品牌描述</th>
+                            <th>品牌图片</th>
+                            <th>品牌logo</th>
+                            <th>删除</th>
                         </tr>
                         <tr ng-repeat="data in tabledata">
                             <td class="col-sm-2">{{data.index}}</td>
@@ -20,6 +21,7 @@
                             <td class="col-sm-2">{{data.describe}}</td>
                             <td class="col-sm-2">{{data.picURL}}</td>
                             <td class="col-sm-2">{{data.brandlogopicURL}}</td>
+                            <td><button type="button" class="glyphicon glyphicon-minus pull-right" ng-click="delbrands(data.brandid)"></button></td>
                         </tr>
                     </table>
                     <div>
@@ -114,10 +116,21 @@
             brands.branddescribe=data.describe;
         }
 
-        scope.editbrands = function(){
+        $scope.editbrands = function(){
             var brands=$scope.brands;
             $http({
                 url:"/back/editbrands",
+                method:"POST",
+                data:brands
+            }).success(function(resObj){
+                $scope.tabledata=resObj;
+            })
+        }
+        $scope.delbrands = function(brandsid){
+            var brands={}
+            brands.brandsid=brandsid;
+            $http({
+                url:"/back/delbrands",
                 method:"POST",
                 data:brands
             }).success(function(resObj){

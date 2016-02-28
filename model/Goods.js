@@ -77,7 +77,7 @@ Goods.getGoodsByCateGoryId  = function(categoryid,offset,pagesize,callback){
 }
 
 Goods.getAllGoods = function(callback){
-    var sql = "select goodsid,name,iscommend from goods";
+    var sql = "select goodsid,name,iscommend,actsupport,dissupport from goods";
     db.query(sql,callback);
 }
 
