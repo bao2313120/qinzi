@@ -12,7 +12,7 @@ var fs = require('fs');
 var async = require('async');
 var config  = require('config');
 var m= require('connect-multiparty');
-var pingpp = require('pingpp')('sk_test_SuzTyDDiXP8OjvjnnHeXrjfD');
+var pingpp = require('pingpp')('sk_live_yDGq1OTOSGCCbz5iHCrb50K4');
 module.exports = router;
 
 

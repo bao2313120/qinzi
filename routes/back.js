@@ -354,5 +354,32 @@ router.post('/addbrands',function(req,res){
     })
 })
 
+router.post('/editbrands',function(req,res){
+    var brands=req.body;
+    brands.picURL=brands.picURL==null?"":brands.picURL.match(new RegExp(config.imageRegex));
+    brands.brandlogopicURL = brands.brandlogopicURL==null?"":brands.brandlogopicURL.match(new RegExp(config.imageRegex));
+    Brand.editBrands(brands,function(err,dbres){
+        Util.errWarn(err);
+        Brand.getAll(function(err,dbres1){
+            for(var i in dbres1){
+                dbres1[i].index=Number(i)+1;
+            }
+            res.json(dbres1);
+        })
+    })
+})
 
+
+router.post('/delbrands',function(req,res){
+    var brandsid=req.body.brandsid;
+    Brand.delBrandsByBrandsId(brandsid,function(err,dbres){
+        Util.errWarn(err);
+        Brand.getAll(function(err,dbres1){
+            for(var i in dbres1){
+                dbres1[i].index=Number(i)+1;
+            }
+            res.json(dbres1);
+        })
+    })
+})
 module.exports = router;

@@ -8,18 +8,20 @@
                     <div class="panel-heading">品牌列表</div>
                     <table class="table">
                         <tr>
-                            <th data-field="index">序号</th>
-                            <th data-field="name" >品牌名称</th>
-                            <th data-field="describe" >品牌描述</th>
-                            <th data-field="picURL" >品牌图片</th>
-                            <th data-field="brandlogopicURL" >品牌logo</th>
+                            <th>序号</th>
+                            <th>品牌名称</th>
+                            <th>品牌描述</th>
+                            <th>品牌图片</th>
+                            <th>品牌logo</th>
+                            <th>删除</th>
                         </tr>
                         <tr ng-repeat="data in tabledata">
-                            <td>{{data.index}}</td>
-                            <td>{{data.name}}</td>
-                            <td>{{data.describe}}</td>
-                            <td>{{data.picURL}}</td>
-                            <td>{{data.brandlogopicURL}}</td>
+                            <td class="col-sm-2">{{data.index}}</td>
+                            <td class="col-sm-2" data-toggle="modal" data-target="#editmodal" ng-click="geteditdata(data)" ><a>{{data.name}}</a></td>
+                            <td class="col-sm-2">{{data.describe}}</td>
+                            <td class="col-sm-2">{{data.picURL}}</td>
+                            <td class="col-sm-2">{{data.brandlogopicURL}}</td>
+                            <td><button type="button" class="glyphicon glyphicon-minus pull-right" ng-click="delbrands(data.brandid)"></button></td>
                         </tr>
                     </table>
                     <div>
@@ -51,6 +53,34 @@
 
                         </div>
                     </div>
+
+                    <div class="modal fade" id="editmodal" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">品牌</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>品牌信息.</p>
+                                    品牌名称:<input type="text" class="form-control" ng-model="brands.name"  required>
+                                    品牌描述:<input type="text" class="form-control" ng-model="brands.branddescribe"  required>
+                                    品牌图片:<input type="text" id="picURL" class="form-control" ng-model="brands.picURL" required>
+                                    <a href="javascript:;" onclick="moxman.browse({view: 'thumbs', fields: 'picURL', extensions:'jpg,gif,png'});" class="btn">Pick file</a>
+                                    <br>
+                                    品牌logo:<input type="text" id="brandlogopicURL" class="form-control" ng-model="brands.brandlogopicURL" >
+                                    <a href="javascript:;" onclick="moxman.browse({view: 'thumbs', fields: 'brandlogopicURL', extensions:'jpg,gif,png'});" class="btn">Pick file</a>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-success" ng-click="editbrands()" data-dismiss="modal" >Add</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -78,7 +108,34 @@
             }).success(function(resObj){
                 $scope.tabledata=resObj;
             })
+        }
 
+        $scope.geteditdata =function(data){
+            $scope.brands=data;
+            var brands=$scope.brands;
+            brands.branddescribe=data.describe;
+        }
+
+        $scope.editbrands = function(){
+            var brands=$scope.brands;
+            $http({
+                url:"/back/editbrands",
+                method:"POST",
+                data:brands
+            }).success(function(resObj){
+                $scope.tabledata=resObj;
+            })
+        }
+        $scope.delbrands = function(brandsid){
+            var brands={}
+            brands.brandsid=brandsid;
+            $http({
+                url:"/back/delbrands",
+                method:"POST",
+                data:brands
+            }).success(function(resObj){
+                $scope.tabledata=resObj;
+            })
         }
     })
 </script>

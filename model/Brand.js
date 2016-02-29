@@ -12,8 +12,8 @@ Brand.insert = function(brand,callback){
 }
 
 Brand.getAll = function(callback){
-    var sql= "select *,branddescribe as 'describe' from brand";
-    db.query(sql,callback);
+    var sql= "select *,branddescribe as 'describe' from brand where isdel=?";
+    db.query(sql,Util.DEL_NO,callback);
 }
 
 Brand.getBrandById = function(brandid,callback){
@@ -21,3 +21,12 @@ Brand.getBrandById = function(brandid,callback){
     db.query(sql,brandid,callback);
 }
 
+Brand.editBrands = function(brands,callback){
+    var sql = "update brand set name=?,branddescribe=?,picURL=?,brandlogopicURL=? where brandid=?";
+    db.query(sql,[brands.name,brands.branddescribe,brands.picURL,brands.brandlogopicURL,brands.brandid],callback);
+}
+
+Brand.delBrandsByBrandsId = function(brandsid,callback){
+    var sql="update brand set isdel=? where brandid=?";
+    db.query(sql,[Util.DEL_YES,brandsid],callback);
+}

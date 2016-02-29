@@ -13,11 +13,15 @@
                         <tr>
                             <th data-field="index">序号</th>
                             <th data-field="name" >商品名称</th>
+                            <th>赞</th>
+                            <th>踩</th>
                             <th data-field="iscommend">是否推荐</th>
                         </tr>
                         <tr ng-repeat="data in tabledata">
                             <td>{{data.index}}</td>
                             <td><a href="/back/toeditgoods?goodsid={{data.goodsid}}">{{data.name}}</a></td>
+                            <td>{{data.actsupport}}</td>
+                            <td>{{data.dissupport}}</td>
                             <td>
                                 <button ng-click="nocommend(data.goodsid)" ng-if="data.iscommend==1">取消推荐</button>
                                 <button ng-click="commend(data.goodsid)" ng-if="data.iscommend==2">推荐</button>
