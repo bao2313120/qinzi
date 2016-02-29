@@ -323,3 +323,15 @@ router.post('/paysuccess',function(req,res){
         })
     })
 })
+
+router.get('/gettestpage',function(req,res){
+    var id = req.query.id;
+    res.locals.id=id;
+    var body=new ResBody();
+    if(id==null||id==""){
+        body.code=Util.ERR_LOGIN_NO;
+        body.failure=Util.ERR_LOGIN_NO_FAILURE;
+        return res.json(body);
+    }
+    res.render('questionpage');
+})
