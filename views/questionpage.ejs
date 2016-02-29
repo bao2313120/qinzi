@@ -52,7 +52,7 @@
         getTestPage();
         function getTestPage(){
             $http({
-                url:"/back/getTestPageData",
+                url:"/users/getTestPageData",
                 method:"GET"
             }).success(function (resObj) {
                 for(var i in resObj){
@@ -81,7 +81,7 @@
             testanswer.answers=answers;
 
             $http({
-                url:"/back/dotestanswer",
+                url:"/users/dotestanswer",
                 method:"POST",
                 data:testanswer
             }).success(function(resObj){

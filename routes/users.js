@@ -11,6 +11,7 @@ var formidable = require('formidable');
 var fs = require('fs');
 var async = require('async');
 var config  = require('config');
+var Question = require('../model/Question');
 var m= require('connect-multiparty');
 var pingpp = require('pingpp')('sk_live_yDGq1OTOSGCCbz5iHCrb50K4');
 module.exports = router;
@@ -334,4 +335,22 @@ router.get('/gettestpage',function(req,res){
         return res.json(body);
     }
     res.render('questionpage');
+})
+
+router.get('/getTestPageData',function(req,res){
+    Question.getInUseQuestion(function(err,dbres){
+        res.send(dbres);
+    })
+})
+
+router.post('/dotestanswer',function(req,res){
+    var testanswer=req.body;
+    var answers=testanswer.answers;
+    var id = Number(testanswer.id);
+    var testid = testanswer.testid;
+    Question.insertAnswers(id,testid,answers,function(err,dbres){
+        User.updateIsTestQuestion(id,Util.TEST_YES,function(err,dbres1){
+            return res.end();
+        })
+    })
 })
