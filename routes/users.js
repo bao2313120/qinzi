@@ -320,6 +320,7 @@ router.post('/paysuccess',function(req,res){
         User.updateVipLevel(id,dbres[0].viplevel,Util.errWarn);
         User.updateOrderPayStatus(orderid,Util.errWarn);
         User.insertPayDetail(pay,function(err,dbres){
+            console.info(err);
             return res.end();
         })
     })
