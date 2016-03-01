@@ -11,6 +11,7 @@ var formidable = require('formidable');
 var fs = require('fs');
 var async = require('async');
 var config  = require('config');
+var Question = require('../model/Question');
 var m= require('connect-multiparty');
 var pingpp = require('pingpp')('sk_live_yDGq1OTOSGCCbz5iHCrb50K4');
 module.exports = router;
@@ -314,11 +315,42 @@ router.post('/paysuccess',function(req,res){
     pay.data=data;
     var orderid=data.data.object.order_no;
     User.getOrderByOrderId(orderid,function(err,dbres){
-        var id = dbres[i].id;
+        var id = dbres[0].id;
         pay.id=id;
-        User.updateVipLevel(id,dbres[i].viplevel,Util.errWarn);
+        User.updateVipLevel(id,dbres[0].viplevel,Util.errWarn);
         User.updateOrderPayStatus(orderid,Util.errWarn);
         User.insertPayDetail(pay,function(err,dbres){
+            console.info(err);
+            return res.end();
+        })
+    })
+})
+
+router.get('/gettestpage',function(req,res){
+    var id = req.query.id;
+    res.locals.id=id;
+    var body=new ResBody();
+    if(id==null||id==""){
+        body.code=Util.ERR_LOGIN_NO;
+        body.failure=Util.ERR_LOGIN_NO_FAILURE;
+        return res.json(body);
+    }
+    res.render('questionpage');
+})
+
+router.get('/getTestPageData',function(req,res){
+    Question.getInUseQuestion(function(err,dbres){
+        res.send(dbres);
+    })
+})
+
+router.post('/dotestanswer',function(req,res){
+    var testanswer=req.body;
+    var answers=testanswer.answers;
+    var id = Number(testanswer.id);
+    var testid = testanswer.testid;
+    Question.insertAnswers(id,testid,answers,function(err,dbres){
+        User.updateIsTestQuestion(id,Util.TEST_YES,function(err,dbres1){
             return res.end();
         })
     })

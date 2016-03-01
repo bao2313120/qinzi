@@ -83,8 +83,9 @@ User.getOrderByOrderId= function(orderid,callback){
 }
 
 User.insertPayDetail = function(pay,callback){
+    console.info(pay);
     var sql = "insert into paydetail (id,orderid,data) values (?,?,?)";
-    db.query(sql,[pay.id,pay.orderid,pay.data],callback);
+    db.query(sql,[pay.id,pay.orderid,JSON.stringify(pay.data)],callback);
 }
 
 User.updateVipLevel = function(id,vipLevel,callback){
