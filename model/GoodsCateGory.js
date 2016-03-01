@@ -23,3 +23,12 @@ GoodsCateGory.getCateGoryById = function(cateGoryId,callback){
     db.query(sql,[cateGoryId],callback);
 }
 
+GoodsCateGory.getAllCateGory = function(callback){
+    var sql="select *,categorydescribe as 'describe' from goods_category";
+    db.query(sql,callback);
+}
+
+
+GoodsCateGory.update = function(category,callback){
+    var sql=""
+}
