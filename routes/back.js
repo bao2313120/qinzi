@@ -396,6 +396,44 @@ router.get('/getallcategory',function(req,res){
 })
 
 router.post('/editcategory',function(req,res){
-    
+    var category=req.body;
+    GoodsCateGory.update(category,function(err,dbres){
+        Util.errWarn(err);
+        GoodsCateGory.getAllCateGory(function(err,dbres1){
+            Util.errWarn(err);
+            for(var i in dbres1){
+                dbres1[i].index=Number(i)+1;
+            }
+            res.json(dbres1);
+        })
+    })
+})
+
+router.post('/addcategory',function(req,res){
+    var category=req.body;
+    GoodsCateGory.insert(category,function(err,dbres){
+        Util.errWarn(err);
+        GoodsCateGory.getAllCateGory(function(err,dbres1){
+            Util.errWarn(err);
+            for(var i in dbres1){
+                dbres1[i].index=Number(i)+1;
+            }
+            res.json(dbres1);
+        })
+    })
+})
+
+router.post('/delcategory',function(req,res){
+    var categoryid=req.body.categoryid;
+    GoodsCateGory.delcategory(categoryid,function(err,dbres){
+        Util.errWarn(err);
+        GoodsCateGory.getAllCateGory(function(err,dbres1){
+            Util.errWarn(err);
+            for(var i in dbres1){
+                dbres1[i].index=Number(i)+1;
+            }
+            res.json(dbres1);
+        })
+    })
 })
 module.exports = router;
