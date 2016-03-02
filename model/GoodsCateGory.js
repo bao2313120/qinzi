@@ -1,6 +1,7 @@
 var db=require('../db');
 var Util=require('../util');
 var Like=require('./Like');
+var config=require('config');
 function GoodsCateGory() {
 
 }
