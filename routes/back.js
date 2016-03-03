@@ -369,12 +369,66 @@ router.post('/editbrands',function(req,res){
     })
 })
 
-
 router.post('/delbrands',function(req,res){
     var brandsid=req.body.brandsid;
     Brand.delBrandsByBrandsId(brandsid,function(err,dbres){
         Util.errWarn(err);
         Brand.getAll(function(err,dbres1){
+            for(var i in dbres1){
+                dbres1[i].index=Number(i)+1;
+            }
+            res.json(dbres1);
+        })
+    })
+})
+router.get('/categorymanager',function(req,res){
+    res.render('categorymanager');
+})
+
+router.get('/getallcategory',function(req,res){
+    GoodsCateGory.getAllCateGory(function(err,dbres){
+        Util.errWarn(err);
+        for(var i in dbres){
+            dbres[i].index=Number(i)+1;
+        }
+        res.json(dbres);
+    })
+})
+
+router.post('/editcategory',function(req,res){
+    var category=req.body;
+    GoodsCateGory.update(category,function(err,dbres){
+        Util.errWarn(err);
+        GoodsCateGory.getAllCateGory(function(err,dbres1){
+            Util.errWarn(err);
+            for(var i in dbres1){
+                dbres1[i].index=Number(i)+1;
+            }
+            res.json(dbres1);
+        })
+    })
+})
+
+router.post('/addcategory',function(req,res){
+    var category=req.body;
+    GoodsCateGory.insert(category,function(err,dbres){
+        Util.errWarn(err);
+        GoodsCateGory.getAllCateGory(function(err,dbres1){
+            Util.errWarn(err);
+            for(var i in dbres1){
+                dbres1[i].index=Number(i)+1;
+            }
+            res.json(dbres1);
+        })
+    })
+})
+
+router.post('/delcategory',function(req,res){
+    var categoryid=req.body.categoryid;
+    GoodsCateGory.delcategory(categoryid,function(err,dbres){
+        Util.errWarn(err);
+        GoodsCateGory.getAllCateGory(function(err,dbres1){
+            Util.errWarn(err);
             for(var i in dbres1){
                 dbres1[i].index=Number(i)+1;
             }
