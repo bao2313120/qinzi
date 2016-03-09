@@ -1,0 +1,54 @@
+<% include top %>
+<div class="container-fluid" ng-controller="qinziController">
+    <div class ="row">
+        <%include left%>
+        <div class="maicontent col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div>
+                <div>
+                    <button type="button" class=" btn btn-lg btn-primary"><a href="/back/addvippage">新增会员等级</a></button>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">会员等级列表</div>
+                    <table class="table">
+                        <tr>
+                            <th data-field="index">序号</th>
+                            <th data-field="name" >会员等级</th>
+                            <th>等级名称</th>
+                            <th>等级描述</th>
+                            <th>等级金额</th>
+                            <th>等级图片URL</th>
+                            <th>删除</th>
+                        </tr>
+                        <tr ng-repeat="data in tabledata">
+                            <td>{{data.index}}</td>
+                            <td>{{data.viplevel}}</td>
+                            <td><a href="/back/toeditgoods?goodsid={{data.goodsid}}">{{data.viptitle}}</a></td>
+                            <td>{{data.vipposter}}</td>
+                            <td>{{data.money}}</td>
+                            <td>{{data.pic}}</td>
+                            <td><button type="button" class="glyphicon glyphicon-minus pull-right" ng-click="delvip(data.categoryid)"></button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    function indexFormatter(value, row, index) {
+        return index;
+    }
+    app.controller('qinziController',function($scope,$http){
+        getVipList();
+        function getVipList(){
+            $http({
+                url:"/back/getviplist",
+                method:"GET"
+            }).success(function(resObj){
+                $scope.tabledata=resObj;
+            })
+        }
+    })
+</script>
+</html>

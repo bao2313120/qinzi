@@ -65,6 +65,22 @@ User.getVipLevelPage = function(viplevelid,callback){
     db.query(sql,viplevelid,callback);
 }
 
+User.insertVipLevel = function(vip,callback){
+    var pic=vip.pic;
+    pic =pic==null?"":pic.match(config.imageRegex)[0];
+    var sql ="insert into viplevel into (viplevel,vipposter,pic,money,viptitle) values(?,?,?,?,?)";
+    db.query(sql,[vip.viplevel,vip.vipposter,pic,vip.money,vip.viptytle],function(err,dbres){
+        var insertId=dbres.insertId;
+        User.insertVipPage(insertId,vip.vippage,callback);
+    });
+}
+
+User.insertVipPage = function(viplevelid,page,callback){
+    var sql = "insert into viplevelpage (viplevelid,viplevelpage) values (?,?)";
+    db.query(sql,[viplevelid,page],callback);
+}
+
+
 User.updateIsTestQuestion = function(id,isTestState,callback){
     var sql = "update user set istestquestion=? where id=?";
     db.query(sql,[isTestState,id],callback);

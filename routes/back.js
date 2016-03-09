@@ -436,4 +436,35 @@ router.post('/delcategory',function(req,res){
         })
     })
 })
+
+router.get('/vipmanager',function(req,res){
+    res.render('vipmanager');
+})
+
+router.get('/getviplist',function(req,res){
+    User.getVipList(function(err,dbres){
+        Util.errWarn(err);
+        for(var i in dbres){
+            dbres[i].index=Number(i)+1;
+        }
+        res.json(dbres);
+    })
+})
+
+router.get('/addvippage', function (req,res) {
+    res.render('addvippage');
+})
+
+router.post('/addvippage',function(req,res){
+    var data=req.body;
+    User.insertVipLevel(data,function(err,dbres){
+        User.getVipList(function(err,dbres1){
+            Util.errWarn(err);
+            for(var i in dbres1){
+                dbres1[i].index=Number(i)+1;
+            }
+            res.json(dbres1);
+        })
+    })
+})
 module.exports = router;
