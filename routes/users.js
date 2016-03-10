@@ -317,6 +317,7 @@ router.post('/paysuccess',function(req,res){
     User.getOrderByOrderId(orderid,function(err,dbres){
         var id = dbres[0].id;
         pay.id=id;
+        pay.orderid=orderid;
         User.updateVipLevel(id,dbres[0].viplevel,Util.errWarn);
         User.updateOrderPayStatus(orderid,Util.errWarn);
         User.insertPayDetail(pay,function(err,dbres){

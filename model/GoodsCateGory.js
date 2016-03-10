@@ -8,7 +8,7 @@ function GoodsCateGory() {
 module.exports = GoodsCateGory;
 
 GoodsCateGory.getGoodsCateGoryByType=function(categorytype,callback){
-    var sql="select *,categorydescribe as 'describe' from goods_category where categorytype=? where isdel=?";
+    var sql="select *,categorydescribe as 'describe' from goods_category where categorytype=? and isdel=?";
     db.query(sql,[categorytype,Util.DEL_NO],callback);
 }
 
