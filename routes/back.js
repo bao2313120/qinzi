@@ -457,6 +457,7 @@ router.get('/addvippage', function (req,res) {
 
 router.post('/addvippage',function(req,res){
     var data=req.body;
+    console.info(data);
     User.insertVipLevel(data,function(err,dbres){
         User.getVipList(function(err,dbres1){
             Util.errWarn(err);
