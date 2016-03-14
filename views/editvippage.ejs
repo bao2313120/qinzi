@@ -27,7 +27,7 @@
             </div>
             <div class="col-sm-9">
                 <label>商品页面信息：</label>
-                <textarea name="content" id="mytextarea"></textarea>
+                <textarea name="content" id="mytextarea1"></textarea>
             </div>
             <div class="col-sm-5 text-center">
                 <button type="button"  class=" btn btn-lg btn-success" ng-click="editvippage()">提交 </button>
@@ -71,14 +71,12 @@
                 }
             }).success(function (resObj) {
                 $scope.data=resObj;
-                tinymce.activeEditor.setContent(resObj.viplevelpage);
+                tinymce.get('mytextarea1').setContent(resObj.viplevelpage);
             })
         }
-
-
         $scope.editvippage=function(){
             var data=$scope.data;
-                data.viplevelpage=tinymce.get('mytextarea').getContent();
+                data.viplevelpage=tinymce.get('mytextarea1').getContent();
             $http({
                 url:"/back/editvippage",
                 method:"POST",
