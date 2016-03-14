@@ -95,7 +95,7 @@ User.updateVipPage = function(viplevelid,page,callback){
 
 User.getVipLevel = function(viplevelid,callback){
     var sql="select a.*,b.viplevelpage from viplevel a left join viplevelpage b on a.viplevelid=b.viplevelid where viplevelid=?"
-    db.query(sql,viplevelid,calback);
+    db.query(sql,viplevelid,callback);
 }
 
 
