@@ -98,6 +98,10 @@ User.getVipLevel = function(viplevelid,callback){
     db.query(sql,viplevelid,callback);
 }
 
+User.delVip=function(viplevelid,callback){
+    var sql ="delete from viplevel where viplevelid=?";
+    db.query(sql,viplevelid,callback);
+}
 
 User.updateIsTestQuestion = function(id,isTestState,callback){
     var sql = "update user set istestquestion=? where id=?";

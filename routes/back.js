@@ -489,6 +489,15 @@ router.post('/editvippage',function(req,res){
 
 })
 
+router.post('/delvip',function(req,res){
+    var viplevelid=req.body.viplevelid;
+    User.delVip(viplevelid,function(err,dbres){
+        User.getVipList(function(err,dbres1){
+            res.send(dbres1);
+        })
+    })
+})
+
 router.get('/getviplevel',function(req,res){
     var viplevelid=req.query.viplevelid;
     User.getVipLevel(viplevelid,function(err,dbres){
