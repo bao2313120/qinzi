@@ -1,0 +1,95 @@
+<% include top %>
+<div class="container-fluid" ng-controller="qinziController">
+    <div class ="row">
+        <%include left%>
+        <div class="maicontent col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+            <h3>输入需要添加的会员等级信息</h3>
+            <div class="col-sm-5">
+                <label> 会员等级： </label>
+                <input type="text" style="" class="form-control"  ng-model="data.viplevel">
+            </div>
+                <div class="col-sm-5">
+                    <label> 等级名称： </label>
+                    <input type="text" style="" class="form-control"  ng-model="data.viptitle">
+                </div>
+                <div class="col-sm-5">
+                    <label> 等级描述：</label>
+                    <input type="text" style="" class="form-control"  ng-model="data.vipposter">
+                </div>
+            <div class="col-sm-5">
+                <label> 等级金额：</label>
+                <input type="text" style="" class="form-control"  ng-model="data.money">
+            </div>
+            <div class="input-append col-sm-5">
+                <label> 等级图片：</label>
+                <input type="text" id="pic" class="form-control input-xlarge" ng-model="data.pic"/>
+                <a href="javascript:;" onclick="moxman.browse({view: 'thumbs', fields: 'pic', extensions:'jpg,gif,png'});" class="btn">Pick file</a>
+            </div>
+            <div class="col-sm-9">
+                <label>商品页面信息：</label>
+                <textarea name="content" id="mytextarea"></textarea>
+            </div>
+            <div class="col-sm-5 text-center">
+                <button type="button"  class=" btn btn-lg btn-success" ng-click="editvippage()">提交 </button>
+            </div>
+            <input type="hidden" ng-model="data.viplevelid" id="viplevelid" >
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $(function(){
+        $('.date').datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+    });
+    tinymce.init({
+        selector: "textarea",
+        plugins: [
+            "moxiemanager advlist autolink lists link image charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste image"
+        ],
+        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+        relative_urls:false,
+        moxiemanager_image_settings:{
+            /* Scope to different folder, show thumbnails of selected extensions */
+            moxiemanager_title : 'Images',
+            moxiemanager_extensions : 'jpg,png,gif',
+            moxiemanager_view : 'thumbs'
+        }
+    });
+    app.controller('qinziController',function($scope,$http){
+        var viplevelid = $('#viplevelid').val();
+        getviplevel();
+        function getviplevel(){
+            $http({
+                url:"/back/getviplevel",
+                method:"GET",
+                params: {
+                    'viplevelid': viplevelid
+                }
+            }).success(function (resObj) {
+                alert(resObj);
+                $scope.data=resObj;
+                if(tinymce.activeEditor){
+                    tinymce.activeEditor.setContent($scope.data.viplevelpage)
+                }
+            })
+        }
+
+
+        $scope.editvippage=function(){
+            var data=$scope.data;
+                data.viplevelpage=tinymce.get('mytextarea').getContent();
+            $http({
+                url:"/back/editvippage",
+                method:"POST",
+                data:data
+            }).success(function(resObj){
+                alert("修改成功");
+            })
+        }
+    })
+</script>
+</html>

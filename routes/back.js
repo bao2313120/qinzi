@@ -468,4 +468,31 @@ router.post('/addvippage',function(req,res){
         })
     })
 })
+
+router.get('/toeditviplevel',function(req,res){
+    var viplevelid=req.query.viplevelid;
+    res.locals.viplevelid=viplevelid;
+    res.render('editvippage',{viplevelid:viplevelid});
+
+})
+
+router.post('/editvippage',function(req,res){
+    var data =req.body;
+    User.updateVip(data,function(err,dbres){
+        Util.errWarn(err);
+        User.updateVipPage(data.viplevelid,data.viplevelpage,function(err1,dbres1){
+            Util.errWarn(err1);
+            res.send(dbres1);
+        })
+    });
+
+
+})
+
+router.get('/getviplevel',function(req,res){
+    var viplevelid=req.query.viplevelid;
+    User.getVipLevel(viplevelid,function(err,dbres){
+        res.send(dbres[0]);
+    })
+})
 module.exports = router;

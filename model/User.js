@@ -80,6 +80,25 @@ User.insertVipPage = function(viplevelid,page,callback){
     db.query(sql,[viplevelid,page],callback);
 }
 
+User.updateVip = function(vip,callback){
+    var pic=vip.pic;
+    pic =pic==null?"":pic.match(config.imageRegex)[0];
+    var sql="update viplevel set viplevel=?,vipposter=?,pic=?,money=?viptitle=? where viplevelid=? ";
+    db.query(sql,[vip.viplevel,vip.vipposter,pic,vip.money,vip.viptitle,vip.viplevelid],callback);
+}
+
+User.updateVipPage = function(viplevelid,page,callback){
+    var sql="update viplevelpage set viplevelpage=? where viplevelid=?";
+    db.query(sql,[page,viplevelid],callback);
+}
+
+
+User.getVipLevel = function(viplevelid,callback){
+    var sql="select a.*,b.viplevelpage from viplevel a left join viplevelpage b on a.viplevelid=b.viplevelid where viplevelid=?"
+    db.query(sql,viplevelid,calback);
+}
+
+
 User.updateIsTestQuestion = function(id,isTestState,callback){
     var sql = "update user set istestquestion=? where id=?";
     db.query(sql,[isTestState,id],callback);
