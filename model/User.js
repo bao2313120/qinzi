@@ -83,7 +83,7 @@ User.insertVipPage = function(viplevelid,page,callback){
 User.updateVip = function(vip,callback){
     var pic=vip.pic;
     pic =pic==null?"":pic.match(config.imageRegex)[0];
-    var sql="update viplevel set viplevel=?,vipposter=?,pic=?,money=?viptitle=? where viplevelid=? ";
+    var sql="update viplevel set viplevel=?,vipposter=?,pic=?,money=?,viptitle=? where viplevelid=? ";
     db.query(sql,[vip.viplevel,vip.vipposter,pic,vip.money,vip.viptitle,vip.viplevelid],callback);
 }
 
