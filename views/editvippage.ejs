@@ -70,7 +70,7 @@
                     'viplevelid': viplevelid
                 }
             }).success(function (resObj) {
-                alert(resObj);
+                alert(JSON.stringify(resObj));
                 $scope.data=resObj;
                 if(tinymce.activeEditor){
                     tinymce.activeEditor.setContent($scope.data.viplevelpage)
