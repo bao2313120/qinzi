@@ -71,10 +71,7 @@
                 }
             }).success(function (resObj) {
                 $scope.data=resObj;
-                if(tinymce.activeEditor){
-                    alert(1234);
-                    tinymce.activeEditor.setContent(resObj.viplevelpage)
-                }
+                tinymce.activeEditor.setContent(resObj.viplevelpage);
             })
         }
 
