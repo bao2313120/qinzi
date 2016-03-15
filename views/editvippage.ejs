@@ -66,8 +66,7 @@
     });
     app.controller('qinziController',function($scope,$http){
         var viplevelid = $('#viplevelid').val();
-        getviplevel();
-        function getviplevel(){
+        $scope.getviplevel = function(){
             $http({
                 url:"/back/getviplevel",
                 method:"GET",
