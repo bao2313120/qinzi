@@ -30,6 +30,9 @@
                 <textarea name="content" id="mytextarea1"></textarea>
             </div>
             <div class="col-sm-5 text-center">
+                <button type="button"  class=" btn btn-lg btn-default" ng-click="getviplevel()">显示 </button>
+            </div>
+            <div class="col-sm-5 text-center">
                 <button type="button"  class=" btn btn-lg btn-success" ng-click="editvippage()">提交 </button>
             </div>
             <input type="hidden" ng-model="data.viplevelid" id="viplevelid" value="<%= viplevelid %>"  >
@@ -73,7 +76,8 @@
                 }
             }).success(function (resObj) {
                 $scope.data=resObj;
-                tinyMCE.activeEditor.setContent(resObj.viplevelpage);
+                tinymce.get('mytextarea1');
+                tinymce.get('mytextarea1').setContent(resObj.viplevelpage);
             })
         }
         $scope.editvippage=function(){
