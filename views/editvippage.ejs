@@ -73,7 +73,7 @@
                 }
             }).success(function (resObj) {
                 $scope.data=resObj;
-                tinymce.get('mytextarea1').setContent(resObj.viplevelpage);
+                tinyMCE.activeEditor.setContent(resObj.viplevelpage);
             })
         }
         $scope.editvippage=function(){
