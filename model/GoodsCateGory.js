@@ -34,7 +34,9 @@ GoodsCateGory.getAllCateGory = function(callback){
 
 GoodsCateGory.update = function(category,callback){
     var sql="update goods_category set categoryname=?,location=?,categorydescribe=?,categorytype=?,picURL=?,widepicURL=? where categoryid=?";
-    db.query(sql,[category.categoryname,category.location,category.categorydescribe,category.categorytype,category.picURL,category.widepicURL],callback);
+    category.picURL=category.picURL==null?"":category.picURL.match(config.imageRegex);
+    category.widepicURL=category.widepicURL==null?"":category.widepicURL.match(config.imageRegex);
+    db.query(sql,[category.categoryname,category.location,category.categorydescribe,category.categorytype,category.picURL,category.widepicURL,category.categoryid],callback);
 }
 
 GoodsCateGory.delcategory = function(categoryid,callback){
