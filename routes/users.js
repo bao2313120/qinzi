@@ -293,11 +293,12 @@ router.post('/payOrder',function(req,res){
 var payOrder = function(req,res){
     var orderno = req.body.orderid;
     var clientip=req.ip;
+    var price=req.body.price;
     console.log(clientip);
     pingpp.charges.create({
         subject: "netgift",
         body: "Your Body",
-        amount: 100,
+        amount:price*100 ,
         order_no: orderno,
         channel: "alipay",
         currency: "cny",
