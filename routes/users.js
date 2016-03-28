@@ -284,15 +284,14 @@ router.post('/doOrder',function(req,res){
 router.post('/payOrder',function(req,res){
     var id = req.body.id;
     var channal =req.body.channal;
+    console.info(JSON.stringify(req.body));
     if(channal=="alipay"){
         payOrder(req,res);
     }
 })
 
 var payOrder = function(req,res){
-    var body = new ResBody();
     var orderno = req.body.orderid;
-    console.info(JSON.stringify(req));
     var clientip=req.ip;
     console.log(clientip);
     pingpp.charges.create({
