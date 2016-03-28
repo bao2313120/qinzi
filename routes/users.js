@@ -292,6 +292,7 @@ router.post('/payOrder',function(req,res){
 var payOrder = function(req,res){
     var body = new ResBody();
     var orderno = req.body.orderid;
+    console.info(JSON.stringify(body));
     var clientip=req.ip;
     console.log(clientip);
     pingpp.charges.create({
