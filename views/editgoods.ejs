@@ -64,6 +64,9 @@
 
             <input type="hidden" id="goodsid" value="<%= goodsid %>">
             <div class="col-sm-5 text-center">
+                <button type="button"  class=" btn btn-lg btn-default" ng-click="getinfo()">显示 </button>
+            </div>
+            <div class="col-sm-5 text-center">
                 <button type="button"  class=" btn btn-lg btn-success" ng-click="update()">提交 </button>
             </div>
         </div>
@@ -96,18 +99,16 @@
         var goodsid = $('#goodsid').val();
         var iscommendoptions=[{id:1,name:"是"},{id:2,name:"否"}]
         $scope.iscommendoptions=iscommendoptions;
-        getinfo();
-        function getinfo() {
+        $scope.getinfo = function(){
             $http({
-                url: '/back/getAddGoodsInfo',
-                method: 'GET'
+                url:"/back/getAddGoodsInfo",
+                method:"GET"
             }).success(
-                    function (resObj) {
-                        console.log(resObj);
-                        $scope.options = resObj;
-                        getGoodsInfo()
-                    }
-            )
+                function (resObj) {
+                    console.log(resObj);
+                    $scope.options = resObj;
+                    getGoodsInfo()
+                })
         }
 
         function getGoodsInfo() {
